@@ -4,13 +4,21 @@
 
 {% block content %} 
 <h1>Hey {{ user.username }}! Where to?</h1>
+<!-- <form class="search" action="{% url 'search' user.id %}" method="POST">
+  {% csrf_token %}
+  <input type="search" placeholder="Search here..." name="usr_query" 
+      value="{{ query }}" required>
+  <button type="submit">Search</button>
+</form>
+-->
 
-<div class="input-group input-group-lg">
-  <input type="text" class="form-control" placeholder="Where do you want to go?" aria-label="Destination" aria-describedby="basic-addon2">
-  <div class="input-group-append">
-    <button class="btn btn-outline-primary" type="button">Search</button>
+<form class="search" action="{% url 'search' user.id %}" method="POST">
+  <div class="input-group input-group-lg">
+    {% csrf_token %}
+    <input type="search" name="usr_query" value="{{ query }}" class="form-control" placeholder="Where do you want to go?" aria-label="Destination" aria-describedby="basic-addon2">
+    <button class="btn btn-outline-primary" type="submit">Search</button>
   </div>
-</div>
+</form>
 <div>
   <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">EAT</button>
   <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">PLAY</button>
