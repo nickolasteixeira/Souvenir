@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Create{% endblock %}
+
+{% block content %} 
+<h1>Hey {{ user.username }}! Where to?</h1>
+
+<div class="input-group input-group-lg">
+  <input type="text" class="form-control" placeholder="Where do you want to go?" aria-label="Destination" aria-describedby="basic-addon2">
+  <div class="input-group-append">
+    <button class="btn btn-outline-primary" type="button">Search</button>
+  </div>
+</div>
+<div>
+  <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">EAT</button>
+  <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">PLAY</button>
+  <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">STAY</button>
+</div>
+<div>
+  <button type="button" class="btn btn-danger">Start Over</button>
+</div>
+{% endblock %}
