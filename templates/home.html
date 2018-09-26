@@ -6,6 +6,8 @@
 {% if user.is_authenticated %}
   Welcome to Souvenir {{ user.username }}
   <p><a href="{% url 'logout' %}">logout</a></p>
+  </div>
+  <p>This is a template</p>
 {% else %}
   <p> You are not logged in </p>
   <a href="{% url 'login' %}">login</a>
