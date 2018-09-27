@@ -7,6 +7,9 @@ class Person(models.Model):
     friends = models.ManyToManyField(User,
                                      related_name='friends_of',
                                      symmetrical=False)
+    def get_friends(self):
+        return [p.id for p in self.friends.all()]
+    
     def __str__(self):
             return self.user.__dict__['username']
     
