@@ -3,14 +3,7 @@
 {% block title %}Create{% endblock %}
 
 {% block content %} 
-<h1>Hey {{ user.username }}! Where to?</h1>
-<!-- <form class="search" action="{% url 'search' user.id %}" method="POST">
-  {% csrf_token %}
-  <input type="search" placeholder="Search here..." name="usr_query" 
-      value="{{ query }}" required>
-  <button type="submit">Search</button>
-</form>
--->
+<h1>Hey {{ user.first_name }}! Where to?</h1>
 
 <form class="search" action="{% url 'search' user.id %}" method="POST">
   <div class="input-group input-group-lg">
