@@ -20,7 +20,12 @@
 <div>
   <button type="button" class="btn btn-danger">Start Over</button>
 </div>
-<div>
-  <button type="button" class="btn btn-primary btn-lg">Create</button>
-</div>
+
+<form action="{% url 'result' user.id %}" method="post">
+  <div class="input-group input-group-lg">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary btn-lg">Create</button>
+  </div>
+</form>
+
 {% endblock %}
