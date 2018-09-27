@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404, render
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.renderers import JSONRenderer
 from django.template.loader import get_template
 from django.template import Context
 from .models import City, Place, Person, Review
@@ -57,22 +58,19 @@ def places_list(request, city_id):
         places = models.Place.objects.filter(city_id=city.id)
         serializer = serializers.PlaceSerializer(places, many=True)
         return Response(serializer.data)
-      
-def search(request, user_id):
-    query = request.POST.get('usr_query', False)
-    print ("QUERY: ", query)
-    t = get_template('souvenirapp/search_results.html')
-    city = City.objects.get(name=query).id
-    print("CITY ID", city)
+
+@api_view(['GET'])      
+def search(request, city_name, user_id):
+    city = City.objects.get(name=city_name).id
     friendsList = Person.objects.get(user_id=user_id).get_friends()
-    print("FRIENDS LIST", friendsList)
+
     reviews = []
     for friend in friendsList:
         rList = Review.objects.filter(user_id_id=friend)
-        user = User.objects.get(id=friend)
+
         for rev in rList:
             place = Place.objects.get(id=rev.place_id_id)
             if place.city_id == city:
-                reviews.append((rev,place,user))
-    print("REVIEWS", reviews)
-    return HttpResponse(t.render({'query':reviews}))
+                reviews.append(rev)
+    serializer = serializers.ReviewSerializer(reviews, many=True)
+    return Response(serializer.data)

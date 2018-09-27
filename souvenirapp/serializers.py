@@ -25,3 +25,9 @@ class PersonSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Person
         fields = '__all__'
+
+class ReviewSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = models.Review
+        fields = '__all__'

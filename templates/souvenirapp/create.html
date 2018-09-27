@@ -5,7 +5,7 @@
 {% block content %} 
 <h1>Hey {{ user.first_name }}! Where to?</h1>
 
-<form class="search" action="{% url 'search' user.id %}" method="POST">
+<form class="search">
   <div class="input-group input-group-lg">
     {% csrf_token %}
     <input type="search" name="usr_query" value="{{ query }}" class="form-control" placeholder="Where do you want to go?" aria-label="Destination" aria-describedby="basic-addon2">
