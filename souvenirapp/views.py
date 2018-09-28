@@ -20,7 +20,8 @@ def index(request):
 #    return render(request, 'souvenirapp/create.html', {'user': user})
 def review(request, user_id):
     user = get_object_or_404(User, id=user_id)
-    return HttpResponse("You are at the create review page %s" % user.username)
+    return render(request, 'souvenirapp/review.html', {'user': user})
+#    return HttpResponse("You are at the create review page %s" % user.username)
 def result(request, user_id):
     user = get_object_or_404(User, id=user_id)
     return render(request, 'souvenirapp/results.html', {'user': user})
