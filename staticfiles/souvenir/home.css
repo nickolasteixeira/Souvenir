@@ -1,0 +1,45 @@
+body, html {
+    height: 100%;
+}
+
+
+.align-self-center {
+        text-align: center;
+        padding: 30px;
+}
+
+.form-box {
+        display:flex;
+        justify-content:center;
+        padding:20px;
+}
+
+.btn-primary, .btn-secondary {
+        margin: 5px;
+        box-shadow: 0 8px 8px -6px black;
+}
+
+.col-sm-8 {
+	max-width: 400px;
+	border: 2px solid blue;
+	margin: 0 auto;
+}
+
+#create {
+    position: fixed;
+    bottom: 60px;
+    right: 60px; 
+}
+
+#create {
+    	position: fixed;
+	bottom: 90px;
+	right: 60px;
+}
+
+#start-over {
+	position: fixed;
+	bottom: 90px;
+	right: 150px;
+}
+
