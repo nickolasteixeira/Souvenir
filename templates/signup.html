@@ -3,10 +3,18 @@
 {% block title %}Sign Up{% endblock %}
 
 {% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'souvenir/styles.css' %}">
+<div class="container">
+<div class="row">
+<div class="col align-self-center">
   <h2>Sign up</h2>
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Sign up</button>
   </form>
+</div>
+</div>
+</div>
 {% endblock %}

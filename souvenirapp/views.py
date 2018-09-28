@@ -4,10 +4,13 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer
+from rest_framework.decorators import api_view, renderer_classes, permission_classes, authentication_classes
 from django.template.loader import get_template
 from django.template import Context
 from .models import City, Place, Person, Review
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
+
+from django.forms.models import model_to_dict
 
 from django.contrib.auth.models import User
 from . import serializers
@@ -63,18 +66,24 @@ def places_list(request, city_id):
         serializer = serializers.PlaceSerializer(places, many=True)
         return Response(serializer.data)
 
-@api_view(['GET'])      
-def search(request, city_name, user_id):
+@api_view(['GET'])
+def search(request, city_name, user_id, format=None):
+    serialized = []
+    AVAILABLE_SERIALIZERS = {'Person': serializers.PersonSerializer, 'State': serializers.StateSerializer, 'Review': serializers.ReviewSerializer, 'Place':serializers.PlaceSerializer, 'User':serializers.UserSerializer}
+
     city = City.objects.get(name=city_name).id
     friendsList = Person.objects.get(user_id=user_id).get_friends()
-
     reviews = []
     for friend in friendsList:
         rList = Review.objects.filter(user_id_id=friend)
-
+        user = User.objects.get(id=friend)
+        user = AVAILABLE_SERIALIZERS[user.__class__.__name__](user, many=False).data
         for rev in rList:
             place = Place.objects.get(id=rev.place_id_id)
             if place.city_id == city:
-                reviews.append(rev)
-    serializer = serializers.ReviewSerializer(reviews, many=True)
-    return Response(serializer.data)
+                place = AVAILABLE_SERIALIZERS[place.__class__.__name__](place, many=False).data
+                rev = AVAILABLE_SERIALIZERS[rev.__class__.__name__](rev, many=False).data
+                reviews.append([rev,place,user])
+    
+    return Response(reviews)
+
