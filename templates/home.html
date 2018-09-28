@@ -10,7 +10,7 @@
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="{% url 'create_itinerary' user.id %}">Create</a>
+                <a class="nav-link" href="{% url 'home' %}">Create</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'result' user.id %}">View Trips</a>
@@ -64,10 +64,16 @@
 
 
 <div>
-  <button type="button" class="btn btn-danger">Start Over</button>
+  <form action="{% url 'home' %}" method="get">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary">Start Over</button>
+  </form>
 </div>
 <div>
-  <button type="button" class="btn btn-primary btn-lg">Create</button>
+  <form action="{% url 'result' user.id %}" method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary">Create</button>
+  </form>
 </div>
 
 <div class="results"></div>
