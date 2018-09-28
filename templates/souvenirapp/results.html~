@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Results{% endblock %}
+
+{% block content %}
+
+<h1>Here is your Itinerary {{ user.first_name }}</h1>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      Eat
+    </div>
+    <div class="col-sm">
+      Play
+    </div>
+    <div class="col-sm">
+      Stay
+    </div>
+  </div>
+</div>
+
+<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+  <div class="btn-group mr-2" role="group" aria-label="First group">
+    <button type="button" class="btn btn-primary">share1</button>
+    <button type="button" class="btn btn-primary">share2</button>
+    <button type="button" class="btn btn-primary">share3</button>
+    <button type="button" class="btn btn-primary">share4</button>
+  </div>
+
+{% endblock %}

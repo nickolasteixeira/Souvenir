@@ -1,0 +1,38 @@
+from django.shortcuts import get_object_or_404, render
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+ 
+# Create your views here.
+from django.http import HttpResponse
+
+from django.contrib.auth.models import User
+from serializers import StateSerializer
+from models import State
+
+def index(request):
+    return HttpResponse("Hello, world. You're at the polls index.")
+def create(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    return render(request, 'souvenirapp/create.html', {'user': user})
+def review(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    return HttpResponse("You are at the create review page %s" % user.username)
+
+@api_view(['GET', 'POST'])
+
+def state_list(request):
+
+#list all states
+    if request.method == 'GET':
+        states = State.objects.all()
+        serializer = StateSerializer(states, many=True)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        serializer = StateSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

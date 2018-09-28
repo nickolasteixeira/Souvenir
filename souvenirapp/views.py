@@ -21,6 +21,9 @@ def create(request, user_id):
 def review(request, user_id):
     user = get_object_or_404(User, id=user_id)
     return HttpResponse("You are at the create review page %s" % user.username)
+def result(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    return render(request, 'souvenirapp/results.html', {'user': user})
 
 @api_view(['GET', 'POST'])
 def state_list(request):
