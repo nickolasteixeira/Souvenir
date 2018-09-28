@@ -1,0 +1,32 @@
+body, html {
+    height: 100%;
+}
+body{
+    background-image: url('https://cdn-image.travelandleisure.com/sites/default/files/styles/1600x1000/public/1500660066/travel-hacks-opener-TRAVELHACK0717.jpg?itok=HgP9J2B_');
+    background-size: cover;
+}
+
+.container {
+        margin-top:60px;
+        max-width:400px;
+}
+
+.align-self-center {
+        text-align: center;
+        padding: 30px;
+        background: white;
+        border-radius: 5%;
+        box-shadow: 0 8px 15px -6px black;
+
+}
+
+.form-box {
+        display:flex;
+        justify-content:center;
+        padding:20px;
+}
+
+.btn-primary, .btn-secondary {
+        margin: 5px;
+        box-shadow: 0 8px 8px -6px black;
+}
