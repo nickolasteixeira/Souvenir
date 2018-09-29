@@ -1,0 +1,47 @@
+.rating {
+    float:left;
+    margin-left:20px;
+    width:300px;
+}
+.rating span { float:left; position:relative;}
+.rating span input {
+    position:absolute;
+    top:0px;
+    left:0px;
+    opacity:0;
+}
+.rating span label {
+    display:inline-block;
+    width:20px;
+    height:20px;
+    text-align:center;
+    color:#FFF;
+    background:#ccc;
+    font-size:30px;
+    margin-right:2px;
+    line-height:30px;
+    border-radius:50%;
+    -webkit-border-radius:50%;
+}
+.rating span:hover ~ span label,
+.rating span:hover label,
+.rating span.checked label,
+.rating span.checked ~ span label {
+    background:#F90;
+    color:#FFF;
+}
+
+.align-self-center {
+    text-align: center;
+    padding: 30px;
+    background: white;
+    border-radius: 5%;
+    box-shadow: 0 8px 15px -6px black;
+
+}
+
+.review_title h1{
+    
+    text-align: center;
+}
+

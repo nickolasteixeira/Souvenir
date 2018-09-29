@@ -43,3 +43,39 @@ body, html {
 	right: 150px;
 }
 
+.results {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.results ul {
+    columns: 2;
+    list-style: none;
+    -webkit-columns: 2;
+    -moz-columns: 2;
+}
+.results article {
+    border: 2px solid #007bff;
+    justify-content: center;
+}
+
+.results article .map{
+    border-top: 2px solid #007bff;
+    border-bottom: 2px solid #007bff;
+}
+
+.results article .col-sm{
+    text-align: right;
+}
+.results article .col-md{
+    text-align: left;
+}
+.results li {
+
+    border-radius: 1%;
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}

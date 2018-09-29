@@ -47,7 +47,7 @@
      <form class="search">
        <div class="input-group input-group-lg">
         {% csrf_token %}
-         <input id="search-bar" type="search" name="usr_query" value="{{ query }}" class="form-control" placeholder="Where do you want to go?" aria-label="Destination" aria-describedby="basic-addon2">
+         <input id="search-bar" user_id="{{ user.id }}" type="search" name="usr_query" value="{{ query }}" class="form-control" placeholder="Where do you want to go?" aria-label="Destination" aria-describedby="basic-addon2">
          <button id="search-btn" class="btn btn-outline-primary" type="submit">Search</button>
         </div>
      </form>
@@ -79,31 +79,51 @@
   </form>
 </div>
 
-<div class="results"></div>
+<div class="results container"></div>
 
 <script>
-  src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous">
-
+  
 console.log('yo');
 $(document).ready(function() {
   $('#search-btn').on('click', function(event){
    let city = ($('#search-bar').val());
+   let user = $('#search-bar').attr('user_id');
+   console.log(user);
    event.preventDefault();
    $.ajax({
       type: 'GET',
-      url: 'http://localhost:8000/souvenirapp/api/' + city + '/1/places',
+      url: 'http://127.0.0.1:8000/souvenirapp/api/' + city + '/' + user + '/places',
       dataType: 'json',
       contentType: 'application/json',
       success: function (data) {
         console.log(data);
         let html = '<ul>';
-        for (let i = 0; i < data.length; ++i){
-           html += '<li>' + data[i].text + '</li>';
+        for (let i of data) {
+          html += '<li>';
+           html += '<article>';
+             html += '<div class="p-3 mb-2 bg-primary text-white">';
+               html += '<h2>' + i[1].name + '</h2></div>';
+             html+= '<div class="information">'
+               html += '<p>' + "Decription: " + i[1].description + '</p>';
+               html += '<p>' + "Review: " + i[0].text + '</p>';
+               html += '<p>' + "Visited by: " + i[2].first_name + '</p>';
+	       html += '<div class="map">'
+	         html += '<a href="https://www.google.com/maps/place/Albany,+NY/"><img class="img-fluid" src="https://maps.googleapis.com/maps/api/staticmap?center=Albany,+NY&zoom=13&scale=1&size=600x300&maptype=roadmap&format=png&visual_refresh=true" alt="Google Map of Albany, NY"></a>'
+	       html += '</div>'
+	     html += '</div>';
+             html += '<div class="row">';
+	       html += '<div class="col-md">';
+	         html += '<button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">'+ "ADD" + '</button>';
+	       html += '</div>';
+	       html += '<div class="col-sm">';
+                 html += '<h3>'+ i[0].rating + '</h3>';
+               html += '</div>';
+	    html += '</div>';
+           html += '</article>';
+         html += '</li>';
         }
         html += '</ul>';
-        $('.results').append(html);
+        $('.results').html(html);
       },
       error: function (jqXHR, textStatus, errorThrown) {
         console.log(jqXHR);
