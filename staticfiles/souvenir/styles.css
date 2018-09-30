@@ -2,12 +2,19 @@ body, html {
     height: 100%;
 }
 body{
-    background-image: url('https://cdn-image.travelandleisure.com/sites/default/files/styles/1600x1000/public/1500660066/travel-hacks-opener-TRAVELHACK0717.jpg?itok=HgP9J2B_');
-    background-size: cover;
+    background-image: url('../images/rawpixel-191102-unsplash.jpg');
+    background-size:cover;
+    background-position: center;
+    background-repeat:no-repeat;
+}
+.login_title {
+    color: white;
+    text-align: left;
+    margin-left: 10px;
 }
 
 .container {
-        margin-top:60px;
+        margin-top:300px;
         max-width:400px;
 }
 
@@ -15,50 +22,50 @@ body{
         text-align: center;
         padding: 30px;
         background: white;
-        border-radius: 5%;
-        box-shadow: 0 8px 15px -6px black;
+        border-radius: 1%;
+        box-shadow: 0 15px 35px -6px #404040;
 
+}
+
+.align-self-center ul{
+    display: none;
+}
+
+.align-self-center h1{
+    text-align: center;
+    color:#3C3C3C;
+}
+.btn-primary {
+    background-color: #1741A8;
+    border-color: #1741A8;
+}
+.btn-primary:hover {
+    background-color: #3861C7;
+    border-color: #3861C7;
+}
+
+.btn-secondary {
+    background-color: #858585;
+    border-color: #858585;
+}
+.btn-secondary:hover {
+    background-color: #A0A0A0;
+    border-color: #A0A0A0;
+}
+.signup_form{
+    text-align: left;
 }
 
 .form-box {
-        display:flex;
+        display:block;
         justify-content:center;
-        padding:20px;
+        padding:10px;
 }
 
 .btn-primary, .btn-secondary {
-        margin: 5px;
+        margin: 10px;
         box-shadow: 0 8px 8px -6px black;
 }
 
-.rating {
-    float:left;
-    width:300px;
-}
-.rating span { float:right; position:relative; }
-.rating span input {
-    position:absolute;
-    top:0px;
-    left:0px;
-    opacity:0;
-}
-.rating span label {
-    display:inline-block;
-    width:30px;
-    height:30px;
-    text-align:center;
-    color:#FFF;
-    background:#ccc;
-    font-size:30px;
-    margin-right:2px;
-    line-height:30px;
-    border-radius:50%;
-    -webkit-border-radius:50%;
-}
-.rating span:hover ~ span label,
-.rating span:hover label,
-.rating span.checked label,
-.rating span.checked ~ span label {
-    background:#F90;
-    color:#FFF;
-}
+
+

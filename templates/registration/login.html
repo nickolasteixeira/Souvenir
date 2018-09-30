@@ -5,21 +5,25 @@
 {% block content %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'souvenir/styles.css' %}">
+<div class="login_title">
+  <h1>Souvenir.</h1>
+</div>
 <div class="container">
 <div class="row">
 <div class="col align-self-center">
 <h2>Login</h2>
 
 <form method="post">
+  {{ form.field.errors|striptags }}
   {% csrf_token %}
   {{ form.as_p }}
   {{ form.field.as_hidden }}
-  <button type="submit" class="btn btn-primary">Login</button>
+  <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
 </form>
 
 <form action="{% url 'password_reset' %}" method="post">
   {% csrf_token %}
-  <button type="submit" class="btn btn-danger">Reset Password</button>
+  <button type="submit" class="btn btn-secondary btn-lg btn-block">Forgot password?</button>
 </form>
 </div>
 </div>

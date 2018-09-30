@@ -21,7 +21,7 @@
         </ul>
     </div>
     <div class="mx-auto order-0">
-        <a class="navbar-brand mx-auto" href="{% url 'home' %}">Souvenir</a>
+        <a class="navbar-brand mx-auto" href="{% url 'home' %}">Souvenir.</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -43,11 +43,11 @@
 <div class="container" style="margin-top: 60px;">
  <div class="row">
    <div class="col align-self-center">
-     <h1 style="text-align: center;">Hey {{ user.username }}! Where to?</h1>
+     <h1 style="text-align: center;">Hey {{ user.first_name }}. Let's get started.</h1>
      <form class="search">
        <div class="input-group input-group-lg">
         {% csrf_token %}
-         <input id="search-bar" type="search" name="usr_query" value="{{ query }}" class="form-control" placeholder="Where do you want to go?" aria-label="Destination" aria-describedby="basic-addon2">
+         <input id="search-bar" user_id="{{ user.id }}" type="search" name="usr_query" value="{{ query }}" class="form-control" placeholder="Where do you want to go?" aria-label="Destination" aria-describedby="basic-addon2">
          <button id="search-btn" class="btn btn-outline-primary" type="submit">Search</button>
         </div>
      </form>
@@ -58,9 +58,9 @@
 <div class="container">
 <div class="row">
   <div class="col align-self-center">
-  <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">EAT</button>
-  <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">PLAY</button>
-  <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">STAY</button>
+  <button type="button" class="btn btn-primary btn-lg" data-toggle="button" aria-pressed="false" autocomplete="off">EAT</button>
+  <button type="button" class="btn btn-primary btn-lg" data-toggle="button" aria-pressed="false" autocomplete="off">PLAY</button>
+  <button type="button" class="btn btn-primary btn-lg" data-toggle="button" aria-pressed="false" autocomplete="off">STAY</button>
   </div>
 </div>
 </div>
@@ -79,31 +79,52 @@
   </form>
 </div>
 
-<div class="results"></div>
+<div class="results container"></div>
 
 <script>
-  src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous">
-
+  
 console.log('yo');
 $(document).ready(function() {
   $('#search-btn').on('click', function(event){
    let city = ($('#search-bar').val());
+   let user = $('#search-bar').attr('user_id');
+   console.log(user);
    event.preventDefault();
    $.ajax({
       type: 'GET',
-      url: 'http://localhost:8000/souvenirapp/api/' + city + '/1/places',
+      url: 'http://127.0.0.1:8000/souvenirapp/api/' + city + '/' + user + '/places',
       dataType: 'json',
       contentType: 'application/json',
       success: function (data) {
         console.log(data);
         let html = '<ul>';
-        for (let i = 0; i < data.length; ++i){
-           html += '<li>' + data[i].text + '</li>';
+        for (let i of data) {
+          html += '<li>';
+	       html += '<article>'; 
+                   html += '<div class="p-3 mb-2 bg- text-white" style="background-color:red;">';
+                   html += '<h2>' + i[1].name + '</h2></div>';
+                   html+= '<div class="information">'
+                     html += '<p>' + "Decription: " + i[1].description + '</p>';
+                     html += '<p>' + "Review: " + i[0].text + '</p>';
+                     html += '<p>' + "Visited by: " + i[2].first_name + '</p>';
+	               html += '<div class="map">'
+	                 html += '<a href="https://www.google.com/maps/place/Albany,+NY/"><img class="img-fluid" src="https://maps.googleapis.com/maps/api/staticmap?center=Albany,+NY&zoom=13&scale=1&size=600x300&maptype=roadmap&format=png&visual_refresh=true" alt="Google Map of Albany, NY"></a>'
+	               html += '</div>';
+	            html += '</div>';
+	     html += '</div>';
+             html += '<div class="row">';
+	       html += '<div class="col-md">';
+	         html += '<button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">'+ "ADD" + '</button>';
+	       html += '</div>';
+	       html += '<div class="col-sm">';
+                 html += '<h3>'+ i[0].rating + '</h3>';
+               html += '</div>';
+	    html += '</div>';
+           html += '</article>';
+         html += '</li>';
         }
         html += '</ul>';
-        $('.results').append(html);
+        $('.results').html(html);
       },
       error: function (jqXHR, textStatus, errorThrown) {
         console.log(jqXHR);
@@ -119,19 +140,23 @@ $(document).ready(function() {
 {% else %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'souvenir/styles.css' %}">
+<div class="login_title">
+  <h1>Souvenir.</h1>
+</div>
 <div class="container">
 <div class="row">
   <div class="col align-self-center">
-  <h1> Welcome to Souvenir </h1>
+  <h1> Welcome. </h1>
   <div class="form-box">
     <form action="{% url 'login' %}" method="post">
       {% csrf_token %}
-      <button type="submit" class="btn btn-primary">Login</button>
+      <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
     </form>
     <form action="{% url 'signup' %}" method="post">
       {% csrf_token %}
-      <button type="submit" class="btn btn-secondary">Signup</button>
+      <button type="submit" class="btn btn-secondary btn-lg btn-block">Signup</button>
     </form>
+    
    </div>
   </div>
 </div>
