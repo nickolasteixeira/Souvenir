@@ -5,15 +5,20 @@
 {% block content %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'souvenir/styles.css' %}">
+<div class="login_title">
+  <h1>Souvenir.</h1>
+</div>
 <div class="container">
 <div class="row">
 <div class="col align-self-center">
   <h2>Sign up</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Sign up</button>
-  </form>
+  <div class="signup_form">
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-primary">Sign up</button>
+    </form>
+   </div>
 </div>
 </div>
 </div>

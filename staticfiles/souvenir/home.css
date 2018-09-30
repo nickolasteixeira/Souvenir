@@ -57,13 +57,13 @@ body, html {
     -moz-columns: 2;
 }
 .results article {
-    border: 2px solid #007bff;
+    border: 2px solid #1741A8;
     justify-content: center;
 }
 
 .results article .map{
-    border-top: 2px solid #007bff;
-    border-bottom: 2px solid #007bff;
+    border-top: 2px solid #1741A8;
+    border-bottom: 2px solid #1741A8;
 }
 
 .results article .col-sm{
@@ -79,3 +79,30 @@ body, html {
     page-break-inside: avoid;
     break-inside: avoid;
 }
+
+.btn-primary {
+    background-color: #1741A8;
+    border-color: #1741A8;
+}
+.btn-primary:hover {
+    background-color: #3861C7;
+    border-color: #3861C7;
+}
+.btn-outline-primary {
+    color: #1741A8;
+    border-color: #1741A8;
+}
+.btn-outline-primary:hover {
+    background-color: #3861C7;
+    border-color: #3861C7;
+}
+
+.btn-secondary {
+    background-color: #858585;
+    border-color: #858585;
+}
+.btn-secondary:hover {
+    background-color: #A0A0A0;
+    border-color: #A0A0A0;
+}
+

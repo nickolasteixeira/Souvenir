@@ -21,7 +21,7 @@
         </ul>
     </div>
     <div class="mx-auto order-0">
-        <a class="navbar-brand mx-auto" href="{% url 'home' %}">Souvenir</a>
+        <a class="navbar-brand mx-auto" href="{% url 'home' %}">Souvenir.</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -43,7 +43,7 @@
 <div class="container" style="margin-top: 60px;">
  <div class="row">
    <div class="col align-self-center">
-     <h1 style="text-align: center;">Hey {{ user.username }}! Where to?</h1>
+     <h1 style="text-align: center;">Hey {{ user.first_name }}. Let's get started.</h1>
      <form class="search">
        <div class="input-group input-group-lg">
         {% csrf_token %}
@@ -58,9 +58,9 @@
 <div class="container">
 <div class="row">
   <div class="col align-self-center">
-  <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">EAT</button>
-  <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">PLAY</button>
-  <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">STAY</button>
+  <button type="button" class="btn btn-primary btn-lg" data-toggle="button" aria-pressed="false" autocomplete="off">EAT</button>
+  <button type="button" class="btn btn-primary btn-lg" data-toggle="button" aria-pressed="false" autocomplete="off">PLAY</button>
+  <button type="button" class="btn btn-primary btn-lg" data-toggle="button" aria-pressed="false" autocomplete="off">STAY</button>
   </div>
 </div>
 </div>
@@ -100,16 +100,17 @@ $(document).ready(function() {
         let html = '<ul>';
         for (let i of data) {
           html += '<li>';
-           html += '<article>';
-             html += '<div class="p-3 mb-2 bg-primary text-white">';
-               html += '<h2>' + i[1].name + '</h2></div>';
-             html+= '<div class="information">'
-               html += '<p>' + "Decription: " + i[1].description + '</p>';
-               html += '<p>' + "Review: " + i[0].text + '</p>';
-               html += '<p>' + "Visited by: " + i[2].first_name + '</p>';
-	       html += '<div class="map">'
-	         html += '<a href="https://www.google.com/maps/place/Albany,+NY/"><img class="img-fluid" src="https://maps.googleapis.com/maps/api/staticmap?center=Albany,+NY&zoom=13&scale=1&size=600x300&maptype=roadmap&format=png&visual_refresh=true" alt="Google Map of Albany, NY"></a>'
-	       html += '</div>'
+	       html += '<article>'; 
+                   html += '<div class="p-3 mb-2 bg- text-white" style="background-color:red;">';
+                   html += '<h2>' + i[1].name + '</h2></div>';
+                   html+= '<div class="information">'
+                     html += '<p>' + "Decription: " + i[1].description + '</p>';
+                     html += '<p>' + "Review: " + i[0].text + '</p>';
+                     html += '<p>' + "Visited by: " + i[2].first_name + '</p>';
+	               html += '<div class="map">'
+	                 html += '<a href="https://www.google.com/maps/place/Albany,+NY/"><img class="img-fluid" src="https://maps.googleapis.com/maps/api/staticmap?center=Albany,+NY&zoom=13&scale=1&size=600x300&maptype=roadmap&format=png&visual_refresh=true" alt="Google Map of Albany, NY"></a>'
+	               html += '</div>';
+	            html += '</div>';
 	     html += '</div>';
              html += '<div class="row">';
 	       html += '<div class="col-md">';
@@ -139,19 +140,23 @@ $(document).ready(function() {
 {% else %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'souvenir/styles.css' %}">
+<div class="login_title">
+  <h1>Souvenir.</h1>
+</div>
 <div class="container">
 <div class="row">
   <div class="col align-self-center">
-  <h1> Welcome to Souvenir </h1>
+  <h1> Welcome. </h1>
   <div class="form-box">
     <form action="{% url 'login' %}" method="post">
       {% csrf_token %}
-      <button type="submit" class="btn btn-primary">Login</button>
+      <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
     </form>
     <form action="{% url 'signup' %}" method="post">
       {% csrf_token %}
-      <button type="submit" class="btn btn-secondary">Signup</button>
+      <button type="submit" class="btn btn-secondary btn-lg btn-block">Signup</button>
     </form>
+    
    </div>
   </div>
 </div>
