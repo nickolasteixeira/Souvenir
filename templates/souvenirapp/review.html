@@ -131,4 +131,22 @@ arge" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.co
 pers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
 </div>
 </div>
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.css' rel='stylesheet' />
+<div id='map' style='width: 400px; height: 300px;'></div>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoiZ2pkYW1lIiwiYSI6ImNqbXFsNXhnYzBpd2gzbGxoY3lwamRuYWUifQ.OFmEoBXX0QrvFMqe8qcmEw';
+var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v9',
+    showZoom: true,
+});
+var nav = new mapboxgl.NavigationControl();
+map.addControl(nav, 'top-left');
+var marker = new mapboxgl.Marker()
+  .setLngLat([30.5, 50.5])
+  .addTo(map);
+</script>
+
+
 {% endblock %}

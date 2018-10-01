@@ -1,3 +1,4 @@
+
 $(document).ready(function() {
     console.log("First run");
     let places = {};
@@ -8,13 +9,13 @@ $(document).ready(function() {
             ]
             console.log(places);
             $(this).toggleClass('a d');
-	    $(this).toggleClass("btn-primary btn-danger");
+	        $(this).toggleClass("btn-primary btn-danger");
             $(this).text('delete');
         } else if ($(this).hasClass('d')) {
             delete places[$(this).parent().attr('rev_id')];
             console.log(places);
             $(this).toggleClass('d a');
-	    $(this).toggleClass("btn-primary btn-danger");
+	        $(this).toggleClass("btn-primary btn-danger");
             $(this).text('add');
         }
 
@@ -39,7 +40,28 @@ $(document).ready(function() {
                 for (let i of data) {
                     html += '<li class="listing ' + i[1].category + '">';
                     html += '<article>';
+		    let lat ="-73.7638";
+		    let lon ="42.6564";
                     html += '<img src="https://cdn.lolwot.com/wp-content/uploads/2015/03/20-amazing-european-vacation-destinations-you-must-visit-1.jpg" alt="tree house" class="img-thumbnail">';
+		    $.ajax({
+			async: false,
+			type:'GET',
+			url: "https://api.mapbox.com/directions/v5/mapbox/cycling/-84.518641,39.134270;-84.512023,39.102779?geometries=geojson&access_token=pk.eyJ1IjoiZ2pkYW1lIiwiYSI6ImNqbXFsNXhnYzBpd2gzbGxoY3lwamRuYWUifQ.OFmEoBXX0QrvFMqe8qcmEw",
+			headers: {
+			    'Access-Control-Allow-Origin': '*'
+			},
+			dataType:'json',
+			contentType: 'application/json',
+			success: function(data2) {
+			    console.log(data2);
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+			    console.log(jqXHR);
+			    console.log(textStatus);
+			    console.log(errorThrown);
+			}
+		    });
+		    html += '<img src="https://api.mapbox.com/v4/mapbox.emerald/pin-s-star+ff9300(' + lat + ',' + lon +')/auto/600x300@2x.png?access_token=pk.eyJ1IjoiZ2pkYW1lIiwiYSI6ImNqbXFsNXhnYzBpd2gzbGxoY3lwamRuYWUifQ.OFmEoBXX0QrvFMqe8qcmEw" alt="Mapbox Map">';
                     html += '<div class="p-3 mb-2 bg- ">';
                     html += '<div class="information" rev_id=' + i[0].id + ' user_id=' + i[2].id + ' place_id=' + i[1].id + '>';
                     html += '<p>' + i[1].name + ' - ' + i[1].description + '</p>';
@@ -67,7 +89,7 @@ $(document).ready(function() {
             }
         });
     });
-
+    
     $('#eat-container').on('click', function(event) {
 	alert("hello");
         $('.Eat:hidden').show('fast');
