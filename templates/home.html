@@ -59,17 +59,17 @@
 
 <div class="container">
 <div class="row button-top">
-  <div class="col button-container">
+  <div class="col button-container" id="eat-container">
     <img src="http://www.fryhole.com/wp-content/uploads/2015/02/nopalito-2.jpg" alt="home">
     <p>Eat</p>
   </div>
-  <div class="col button-container">
+  <div class="col button-container" id="play-container">
     <img src="https://cdn.shopify.com/s/files/1/0773/9113/articles/San_Francisco_Bike_Tour_1400x.progressive.jpg?v=1485461310" alt="home">
     <p>Play</p>
   </div>
-  <div class="col button-container">
+  <div class="col button-container" id="stay-container">
     <img src="https://img.buzzfeed.com/buzzfeed-static/static/2016-12/9/17/campaign_images/buzzfeed-prod-fastlane01/18-ways-to-make-your-bed-the-most-comfy-place-on--2-5724-1481321073-5_dblbig.jpg" alt="home">
-    <p>Sleep</p>
+    <p>Stay</p>
   </div>
 </div>
 </div>
@@ -111,7 +111,7 @@ $(document).ready(function() {
         console.log(data);
         let html = '<ul>';
         for (let i of data) {
-          html += '<li class="listing">';
+          html += '<li class="listing ' + i[1].category + '">';
 	       html += '<article>'; 
             	   html += '<img src="https://cdn.lolwot.com/wp-content/uploads/2015/03/20-amazing-european-vacation-destinations-you-must-visit-1.jpg" alt="tree house" class="img-thumbnail">';
 	           html += '<div class="p-3 mb-2 bg- ">';
@@ -120,6 +120,7 @@ $(document).ready(function() {
 	               html += '<button type="button" class="btn btn-primary float-right" data-toggle="button" aria-pressed="false" autocomplete="off">'+ "ADD" + '</button>';
                        html += '<p>' + "Review: " + i[0].text + '</p>';
                        html += '<p>' + "Recommended by " + i[2].first_name + '</p>';
+		       html += '<p>' + 'Category - ' + i[1].category + '</p>';
 		       for (let j = 0; j < i[0].rating; ++j) {
 		           html += '<i class="fas fa-star"></i>';
 			}
@@ -133,13 +134,32 @@ $(document).ready(function() {
       },
       error: function (jqXHR, textStatus, errorThrown) {
         html = '<h1>No data found</h1>';
-        $('results').html(html);
+        $('.results').html(html);
         console.log(jqXHR);
         console.log(textStatus);
         console.log(errorThrown);
       }
     });
     });
+
+   $('#eat-container').on('click', function(event){
+      $('.Eat:hidden').show('fast');
+      $('.Stay').css('display', 'none');
+      $('.Play').css('display', 'none');
+   });
+
+  $('#stay-container').on('click', function(event){
+      $('.Stay:hidden').show('fast');
+      $('.Eat').css('display', 'none');
+      $('.Play').css('display', 'none');
+   });
+
+  $('#play-container').on('click', function(event){
+      $('.Play:hidden').show('fast');
+      $('.Eat').css('display', 'none');
+      $('.Stay').css('display', 'none');
+   });
+
 });
 </script>
 
