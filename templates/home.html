@@ -4,6 +4,7 @@
 
 {% block content %}
 {% if user.is_authenticated %}
+{% load static %}
 <div class="row">
    <div class="col-md-12">
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
@@ -36,8 +37,7 @@
 </nav>   
 </div>
 </div>
-
-{% load static %}
+<script src="{% static 'js/script.js' %}"></script>
 <link rel="stylesheet" href="{% static 'souvenir/home.css' %}">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
@@ -82,10 +82,12 @@
   </form>
 </div>
 <div>
-  <form action="{% url 'result' user.id %}" method="post">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-primary" id="create">Create</button>
-  </form>
+  <!--<form action="{% url 'result' user.id %}" method="post">
+    {% csrf_token %}-->
+  <button user_id="{{ user.id }}"
+	  type="submit" class="cr btn btn-primary"
+	  id="create">Create</button>
+  <!--</form>-->
 </div>
 
 <div class="container results-container">
@@ -93,7 +95,7 @@
   </div>
 </div>
 
-<script>
+<!--<script>
   
 console.log('yo');
 $(document).ready(function() {
@@ -161,7 +163,7 @@ $(document).ready(function() {
    });
 
 });
-</script>
+</script>-->
 
 
 {% else %}

@@ -3,6 +3,11 @@
 {% block title %}Results{% endblock %}
 
 {% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'souvenir/home.css' %}">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
+
 <div class="row">
    <div class="col-md-12">
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
@@ -33,15 +38,14 @@
         </ul>
     </div>
 </nav>
-</div>
-
-<div id="result_title">
+   </div>
+   <div id="result_title">
   <style>
   h1 {
     position: relative;
     margin-left: 40px;
   } </style>
-  <h1>Here is your Itinerary {{ user.first_name }}</h1>
+  <h1>Here is your Itinerary {{ user.username }}</h1>
 </div>
 </div>
 
@@ -57,7 +61,31 @@
 
     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
       <div class="card-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+	<ul>
+	  {% for i in result %}
+	  {% if i.1.category == "EAT" %}
+	  <li class="listing {{ i.1.category }}">
+	    <article>
+	      <img src="https://cdn.lolwot.com/wp-content/uploads/2015/03/20-amazing-european-vacation-destinations-you-must-visit-1.jpg" alt="tree house" class="img-thumbnail">
+	      <div class="p-3 mb-2 bg- ">
+		<div class="information" rev_id="{{ i.0.id }}"
+		     user_id="{{ i.2.id }}"
+		     place_id="{{ i.1.id }}">
+		  <p>{{ i.1.name }} - {{ i.1.description }}</p>
+		  <button type="button" class="a btn btn-primary float-right"
+			  data-toggle="button"
+			  aria-pressed="false"
+			  autocomplete="off">ADD</button>
+		  <p>Review: {{ i.0.text }}</p>
+		  <p>Recommended by {{ i.2.username }}</p>
+		  <p>Category - {{ i.1.category }}</p>
+		</div>
+	      </div>
+	    </article>
+	  </li>
+	  {% endif %}
+	  {% endfor %}
+	</ul>
       </div>
     </div>
   </div>
@@ -71,7 +99,6 @@
     </div>
     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
       <div class="card-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
       </div>
     </div>
   </div>
@@ -85,7 +112,6 @@
     </div>
     <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
       <div class="card-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
       </div>
     </div>
   </div>

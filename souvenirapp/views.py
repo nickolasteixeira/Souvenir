@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, render
-
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -25,10 +25,20 @@ def review(request, user_id):
     user = get_object_or_404(User, id=user_id)
     return render(request, 'souvenirapp/review.html', {'user': user})
 #    return HttpResponse("You are at the create review page %s" % user.username)
+@csrf_exempt
 def result(request, user_id):
+    query = request.POST.copy()
+    results=[]
+    for key, value in list(query.items()):
+        rev = Review.objects.get(id=key[0])
+        r = query.pop(key)
+        user = User.objects.get(id=r[1])
+        place = Place.objects.get(id=r[0])
+        results.append([rev, place, user])
     user = get_object_or_404(User, id=user_id)
-    return render(request, 'souvenirapp/results.html', {'user': user})
-
+    print(results)
+    return render(request, 'souvenirapp/results.html', {'user': user,
+                                                        'result': results})
 @api_view(['GET', 'POST'])
 def state_list(request):
 #list all states
