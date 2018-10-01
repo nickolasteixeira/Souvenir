@@ -3,7 +3,10 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
+{% load static %}
 {% if user.is_authenticated %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<script src="{% static 'js/script.js' %}"></script>
 <div class="row">
    <div class="col-md-12">
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
@@ -41,7 +44,7 @@
  <div class="row">
    <div class="col align-self-center">
      <h1 style="text-align: center;">Hey {{ user.username }}! Where to?</h1>
-     <form class="search">
+     <form class="search" action="{% url 'search' user.id %}" method="POST">
        <div class="input-group input-group-lg">
         {% csrf_token %}
          <input id="search-bar" type="search" name="usr_query" value="{{ query }}" class="form-control" placeholder="Where do you want to go?" aria-label="Destination" aria-describedby="basic-addon2">
@@ -70,55 +73,30 @@
   </form>
 </div>
 <div>
-  <form action="{% url 'result' user.id %}" method="post">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-primary">Create</button>
-  </form>
+  
+  <!--<form action="{% url 'result' user.id %}" method="post">
+    {% csrf_token %}-->
+    <button id="cr" user_id="{{ user.id }}"
+	    class="btn btn-primary">Create</button>
+  <!--</form>-->
+</div>
+<div class="results container-fluid"> 
+  {% for obj in result %}
+  {% if forloop.first %}<div class="row"> {% endif %}
+    <article place_id="{{obj.1.id}}" rev_id="{{ obj.0.id }}"
+	     user_id="{{ obj.2.id}}" class="column-xs-4">
+      <h1>{{ obj.1.name }}</h1>
+      <img class="img-fluid" src="http://www.endlessicons.com/wp-content/uploads/2012/11/image-holder-icon-614x460.png">
+      <p>{{ obj.0.text }} </p>
+      <p>Reccommended by: {{ obj.2.username}}</p>
+      <button type="submit" class="btn btn-primary a">add</button>
+    </article>
+    {% if forloop.counter|divisibleby:2 %}</div><div class="row">{% endif %}
+    {% if forloop.last %}</div>{% endif %}
+  {% endfor %}
+  {% else %}
 </div>
 
-<div class="results"></div>
-
-<script
-  src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
-<script>
-
-<script>
-console.log('yo');
-$(document).ready(function() {
-
-
-  $('#search-btn').on('click', function(event){
-   let city = ($('#search-bar').val());
-   event.preventDefault();
-   $.ajax({
-      type: 'GET',
-      url: 'http://localhost:8000/souvenirapp/api/' + city + '/1/places',
-      dataType: 'json',
-      contentType: 'application/json',
-      success: function (data) {
-        console.log(data);
-        let html = '<ul>';
-        for (let i = 0; i < data.length; ++i){
-           html += '<li>' + data[i].text + '</li>';
-        }
-        html += '</ul>';
-        $('.results').append(html);
-      },
-      error: function (jqXHR, textStatus, errorThrown) {
-        console.log(jqXHR);
-        console.log(textStatus);
-        console.log(errorThrown);
-      }
-    });
-    });
-});
-</script>
-
-
-{% else %}
-{% load static %}
 <link rel="stylesheet" href="{% static 'souvenir/styles.css' %}">
 <div class="container">
 <div class="row">
