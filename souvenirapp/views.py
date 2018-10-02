@@ -38,10 +38,8 @@ def result(request, user_id):
         r = query.pop(key)
         user = User.objects.get(id=r[1])
         place = Place.objects.get(id=r[0])
-        city = City.objects.get(id=place.city_id)
         trip.places.append(place.id)
-        trip.name = "Hello"
-        trip.save()
+        city = City.objects.get(id=place.city_id)
         if place.category == "Eat":
             results["eat"].append([rev, place, user])
         elif place.category == "Play":
@@ -49,6 +47,8 @@ def result(request, user_id):
         elif place.category == "Stay":
             results["stay"].append([rev, place, user])
         #results.append([rev, place, user])
+    trip.name = "{}'s trip to {}".format(current_user.username, city.name)
+    trip.save()
     print("******************")
     print(trip.name)
     print(trip.places)
@@ -116,5 +116,7 @@ def search(request, city_name, user_id, format=None):
 def trips(request, user_id):
     trips = Trip.objects.filter(user=user_id)
     t = get_template('souvenirapp/view_trips.html')
+    user = get_object_or_404(User, id=user_id)
     return HttpResponse(t.render({'query':
-    [trip.places for trip in trips if trip.places]}))
+                                  [trip.name for trip in trips if trip.places],
+                                  'user': user}))
