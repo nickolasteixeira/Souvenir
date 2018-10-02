@@ -37,7 +37,7 @@ class Place(models.Model):
     zipcode = models.CharField(max_length=5, null=True)
     address = models.CharField(max_length=100, null=True)
     phone = models.CharField(max_length=30, null=True)
-    photoUrl = models.CharField(max_length=300, null=True)
+    photourl = models.CharField(max_length=300, null=True)
     def __str__(self):
         return self.name
 

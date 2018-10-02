@@ -10,35 +10,39 @@ def dump_data():
     url = 'https://api.foursquare.com/v2/venues/explore?near=San_Francisco&section=food&client_id=' + client_id + '&client_secret=' + client_secret + '&v=20180924'
     r = requests.get(url)
     if r.status_code == 200:
-        conn = psycopg2.connect('dbname=testpython user=vagrant123')
+        conn = psycopg2.connect('dbname=testpython user=vagrant password={}'.format(os.environ.get('DJANGO_PASSWORD')))
         cur = conn.cursor()
         data = r.json()
         for item in data.get('response').get('groups')[0].get('items'):
+            city = 1
             category = 'Eat'
             name = item.get('venue').get('name')
             description = item.get('venue').get('categories')[0].get('name')
-            lat = item.get('venue').get('location').get('lat')
-            lng = item.get('venue').get('location').get('lng')
+            lat = float(item.get('venue').get('location').get('lat'))
+            lng = float(item.get('venue').get('location').get('lng'))
             zipcode = item.get('venue').get('location').get('postalCode')
             address = item.get('venue').get('location').get('address')
             item_id = item.get('venue').get('id')
-            phone = 
-            photoUrl = ''
+            phone = '' 
+            photoUrl = {'id': ''}
             #request 2 to get photoURL
             url2 = 'https://api.foursquare.com/v2/venues/' + item_id + '/photos?client_id=' + client_id + '&client_secret=' + client_secret + '&v=20180924'
             r2 = requests.get(url2)
             if r2.status_code == 200:
                 data2 = r2.json()
                 for photo in data2.get('response').get('photos').get('items'):
-                    photoUrl += photo.get('prefix') + '400x300' + photo.get('suffix')
+                    photoUrl['id'] = photo.get('prefix') + '400x300' + photo.get('suffix')
+                    print(photoUrl.get('id'))
             else:
                 print('Unable to retrieve photo url => Statu_code {}'.format(r2.status_code))            
             
-            '''Category, Name, Description, Lat, Long, Zip, Address, Phone, Photourl'''
-            cur.execute(
-            'INSERT INTO souvenirapp_place VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)',
-            (category, name, description, lat, lng, zipcode, address, phone, photoUrl) 
-            )
+            '''Category, City, Name, Description, Lat, Long, Zip, Address, Phone, Photourl'''
+            try:
+                cur.execute(
+                'INSERT INTO souvenirapp_place(category, name, description, city_id, address, latitude, longitude, phone, photourl, zipcode) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)', (category, name, description, city, address, lat, lng, phone, photoUrl.get('id'), zipcode))
+                print('Data point added to database => testpython')
+            except Exception as e:
+                print(e)
             #printing
             '''
             print('Category: {}'.format(category))
