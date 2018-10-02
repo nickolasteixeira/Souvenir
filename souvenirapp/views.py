@@ -28,13 +28,19 @@ def review(request, user_id):
 @csrf_exempt
 def result(request, user_id):
     query = request.POST.copy()
-    results=[]
+    results={"eat":[], "play":[], "stay":[]}
     for key, value in list(query.items()):
         rev = Review.objects.get(id=key[0])
         r = query.pop(key)
         user = User.objects.get(id=r[1])
         place = Place.objects.get(id=r[0])
-        results.append([rev, place, user])
+        if place.category == "EAT":
+            results["eat"].append([rev, place, user])
+        elif place.category == "PLAY":
+            results["play"].append([rev, place, user])
+        elif place.category == "STAY":
+            results["stay"].append([rev, place, user])
+        #results.append([rev, place, user])
     user = get_object_or_404(User, id=user_id)
     print(results)
     return render(request, 'souvenirapp/results.html', {'user': user,
