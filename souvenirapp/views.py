@@ -7,7 +7,7 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.decorators import api_view, renderer_classes, permission_classes, authentication_classes
 from django.template.loader import get_template
 from django.template import Context
-from .models import City, Place, Person, Review
+from .models import City, Place, Person, Review, Trip
 from django.http import HttpResponse, JsonResponse
 
 from django.forms.models import model_to_dict
@@ -28,12 +28,20 @@ def review(request, user_id):
 @csrf_exempt
 def result(request, user_id):
     query = request.POST.copy()
+    current_user = User.objects.get(id=user_id)
+    trip = Trip.objects.create(user=current_user)
+    trip.save()
+    trip.places = []
     results={"eat":[], "play":[], "stay":[]}
     for key, value in list(query.items()):
         rev = Review.objects.get(id=key[0])
         r = query.pop(key)
         user = User.objects.get(id=r[1])
         place = Place.objects.get(id=r[0])
+        city = City.objects.get(id=place.city_id)
+        trip.places.append(place.id)
+        trip.name = "Hello"
+        trip.save()
         if place.category == "Eat":
             results["eat"].append([rev, place, user])
         elif place.category == "Play":
@@ -41,8 +49,10 @@ def result(request, user_id):
         elif place.category == "Stay":
             results["stay"].append([rev, place, user])
         #results.append([rev, place, user])
+    print("******************")
+    print(trip.name)
+    print(trip.places)
     user = get_object_or_404(User, id=user_id)
-    print(results)
     return render(request, 'souvenirapp/results.html', {'user': user,
                                                         'result': results})
 @api_view(['GET', 'POST'])
