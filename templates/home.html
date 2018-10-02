@@ -41,6 +41,8 @@
 <link rel="stylesheet" href="{% static 'souvenir/home.css' %}">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
+<script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.js"></script>
+<link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.css" rel='stylesheet' />
 
 <div class="container" style="margin-top: 60px;">
  <div class="row">
@@ -90,11 +92,54 @@
   <!--</form>-->
 </div>
 
+
+<div class="container map-container" id="map" style='width: 800px; height: 400px;'>
+</div>
+
+
 <div class="container results-container">
   <div class="row results container">
   </div>
 </div>
 
+
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoiZ2pkYW1lIiwiYSI6ImNqbXFsNXhnYzBpd2gzbGxoY3lwamRuYWUifQ.OFmEoBXX0QrvFMqe8qcmEw';
+$(document).ready(function() {  
+$('#search-btn').on('click', function(event){
+    let city = ($('#search-bar').val());
+    let user = $('#search-bar').attr('user_id');
+    event.preventDefault();
+    var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v9',
+    zoom: 9,
+});
+var nav = new mapboxgl.NavigationControl();
+map.addControl(nav, 'top-left');
+    $.ajax({
+      type: 'GET',                                                                                     
+      url: 'http://127.0.0.1:8000/souvenirapp/api/' + city + '/' + user + '/places',
+      dataType: 'json',
+      contentType: 'application/json',
+      success: function (data) {                                                                       
+         console.log(data);
+         for (let i of data) {
+            var marker = new mapboxgl.Marker()
+                .setLngLat([i[1].longitude, i[1].latitude])
+                .addTo(map);
+            console.log(i[1].latitude);
+            map.setCenter([i[1].longitude, i[1].latitude]);
+            
+}
+}
+});
+});
+});
+
+
+
+</script>
 <!--<script>
   
 console.log('yo');
@@ -164,7 +209,6 @@ $(document).ready(function() {
 
 });
 </script>-->
-
 
 {% else %}
 {% load static %}
