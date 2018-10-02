@@ -21,8 +21,12 @@ sudo pip install -r requirements.txt
 # Run application
 sudo apt-get install nginx
 sudo sed -i 's~try_files $uri $uri/ =404;~proxy_pass http://0.0.0.0:8001/;~' /etc/nginx/sites-available/default
+sudo sed -i '38i location /static/ {autoindex off;alias /home/ubuntu/Souvenir/staticfiles/;}' /etc/nginx/sites-available/default
 sudo service nginx restart
+
+#create super user
+echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('vagrant', 'admin@myproject.com', '$DJANGO_PASSWORD')" | python3 manage.py shell
+
+
+#migrate database
 python3 manage.py migrate
-
-
-python3 manage.py runserver 0:8001
