@@ -113,3 +113,8 @@ def search(request, city_name, user_id, format=None):
     
     return Response(reviews)
 
+def trips(request, user_id):
+    trips = Trip.objects.filter(user=user_id)
+    t = get_template('souvenirapp/view_trips.html')
+    return HttpResponse(t.render({'query':
+    [trip.places for trip in trips if trip.places]}))
