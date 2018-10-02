@@ -40,7 +40,7 @@ $(document).ready(function() {
                 for (let i of data) {
                     html += '<li class="listing ' + i[1].category + '">';
                     html += '<article>';
-                    html += '<img src="https://cdn.lolwot.com/wp-content/uploads/2015/03/20-amazing-european-vacation-destinations-you-must-visit-1.jpg" alt="tree house" class="img-thumbnail">';
+                    html += '<img src="'+i[1].photoUrl+'" class="img-thumbnail">';
                     html += '<div class="p-3 mb-2 bg- ">';
                     html += '<div class="information" rev_id=' + i[0].id + ' user_id=' + i[2].id + ' place_id=' + i[1].id + '>';
                     html += '<p>' + i[1].name + ' - ' + i[1].description + '</p>';
