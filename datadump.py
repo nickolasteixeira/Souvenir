@@ -2,12 +2,14 @@
 import requests
 import os
 import psycopg2
+import sys
 
-def dump_data():
+def dump_data(city_search, section, category):
     '''data dump from foursquare api'''
     client_id = os.environ.get('CLIENT_ID')
     client_secret = os.environ.get('CLIENT_SECRET')
-    url = 'https://api.foursquare.com/v2/venues/explore?near=San_Francisco&section=food&client_id=' + client_id + '&client_secret=' + client_secret + '&v=20180924'
+    
+    url = 'https://api.foursquare.com/v2/venues/explore?near=' + city_search + '&section=' +  section +'&client_id=' + client_id + '&client_secret=' + client_secret + '&v=20180924'
     r = requests.get(url)
     if r.status_code == 200:
         conn = psycopg2.connect('dbname=testpython user=vagrant password={}'.format(os.environ.get('DJANGO_PASSWORD')))
@@ -15,7 +17,7 @@ def dump_data():
         data = r.json()
         for item in data.get('response').get('groups')[0].get('items'):
             city = 1
-            category = 'Eat'
+            category = category
             name = item.get('venue').get('name')
             description = item.get('venue').get('categories')[0].get('name')
             lat = float(item.get('venue').get('location').get('lat'))
@@ -64,4 +66,7 @@ def dump_data():
     conn.close()
 
 if __name__ == '__main__':
-    dump_data()
+    if len(sys.argv) is not 4:
+        print('Usage: <executable file> <city> <section: ["food", "shops", "arts", "outdoors" "sights"]> <category: ["Eat", "Play", "Stay"]>')
+    else:
+        dump_data(sys.argv[1], sys.argv[2], sys.argv[3])
