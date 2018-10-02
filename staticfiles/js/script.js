@@ -70,21 +70,18 @@ $(document).ready(function() {
     });
     
     $('#eat-container').on('click', function(event) {
-	alert("hello");
         $('.Eat:hidden').show('fast');
         $('.Stay').css('display', 'none');
         $('.Play').css('display', 'none');
     });
 
     $('#stay-container').on('click', function(event) {
-	alert("hello");
         $('.Stay:hidden').show('fast');
         $('.Eat').css('display', 'none');
         $('.Play').css('display', 'none');
     });
 
     $('#play-container').on('click', function(event) {
-	alert("hello");
         $('.Play:hidden').show('fast');
         $('.Eat').css('display', 'none');
         $('.Stay').css('display', 'none');
