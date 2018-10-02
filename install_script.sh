@@ -21,7 +21,9 @@ sudo pip install -r requirements.txt
 # Run application
 sudo apt-get install nginx
 sudo sed -i 's~try_files $uri $uri/ =404;~proxy_pass http://0.0.0.0:8001/;~' /etc/nginx/sites-available/default
-sudo sed -i '38i location /static/ {autoindex off;alias /home/ubuntu/Souvenir/staticfiles/;}' /etc/nginx/sites-available/default
+sudo sed -i '38i location /static/ {autoindex off;alias /home/ubuntu/Souvenir/static/;}' /etc/nginx/sites-available/default
+
+python3 manage.py collectstatic --noinput
 sudo service nginx restart
 
 #create super user
