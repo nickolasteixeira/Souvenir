@@ -34,11 +34,11 @@ def result(request, user_id):
         r = query.pop(key)
         user = User.objects.get(id=r[1])
         place = Place.objects.get(id=r[0])
-        if place.category == "EAT":
+        if place.category == "Eat":
             results["eat"].append([rev, place, user])
-        elif place.category == "PLAY":
+        elif place.category == "Play":
             results["play"].append([rev, place, user])
-        elif place.category == "STAY":
+        elif place.category == "Stay":
             results["stay"].append([rev, place, user])
         #results.append([rev, place, user])
     user = get_object_or_404(User, id=user_id)
