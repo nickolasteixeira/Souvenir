@@ -1,0 +1,183 @@
+{% extends 'base.html' %}
+
+{% block title %}Results{% endblock %}
+
+{% block content %}
+
+<div class="row">
+   <div class="col-md-12">
+     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+       <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+         <ul class="navbar-nav mr-auto">
+           <li class="nav-item active">
+             <a class="nav-link" href="{% url 'home' %}">Create</a>
+           </li>
+           <li class="nav-item">
+             <a class="nav-link" href="{% url 'result' user.id %}">View Trips</a>
+           </li>
+           <li class="nav-item">
+             <a class="nav-link" href="{% url 'write_review' user.id %}">Review</a>
+           </li>
+         </ul>
+    </div>
+       <div class="mx-auto order-0">
+         <a class="navbar-brand mx-auto" href="{% url 'home' %}">Souvenir</a>
+         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+           <span class="navbar-toggler-icon"></span>
+         </button>
+       </div>
+       <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+         <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+            </li>
+         </ul>
+       </div>
+     </nav>
+   </div>
+   <div id="result_title">
+     <script>
+       $( document ).ready(function() {
+       let heights = $(".info").map(function() {
+       return $(this).height();
+       }).get(),
+       
+       maxHeight = Math.max.apply(null, heights);
+       console.log(maxHeight);
+       $(".info").height(maxHeight);
+       });
+     </script>
+     <style>
+       h1 {
+       position: relative;
+       margin-left: 40px;
+       }
+       article {
+       max-width:400px;
+       }
+       .top-10 { margin-top:10px; }
+       .flex-center{
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       }
+     </style>
+     <h1>Here is your Itinerary {{ user.username }}</h1>
+   </div>
+</div>
+
+<div id="accordion">
+  <div class="card">
+    <div class="card-header" id="headingOne">
+      <h5 class="mb-0">
+        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          <h3>Eat</h3>
+        </button>
+      </h5>
+    </div>
+    
+    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+      <div class="center-block card-body container" style="max-width: 970px;">
+	{% for i in result.eat %}
+	{% if forloop.first %} <div class="row flex-center">{% endif %}
+	  <article class="top-10 col-md-5 listing {{ i.1.category }}">
+	    <img src="https://cdn.lolwot.com/wp-content/uploads/2015/03/20-amazing-european-vacation-destinations-you-must-visit-1.jpg" alt="tree house" class="img-thumbnail img-fluid">
+	    <div class="card">
+	      <div class="card-body info" rev_id="{{ i.0.id }}"
+		   user_id="{{ i.2.id }}"
+		     place_id="{{ i.1.id }}">
+		<h3 class="card-title">{{ i.1.name }}</h3>
+		<p class="card-text">{{ i.1.description }}</p>
+		<p class="card-text">Recommended by {{ i.2.username }}</p>
+		<p class="card-text">Review: {{ i.0.text }}</p>
+	      </div>
+	    </div>
+	  </article>
+	  {% if forloop.counter|divisibleby:2 %}
+	</div><div class="top-10 row flex-center">
+	  {% endif %}
+	  {% if forloop.last %}</div>{% endif %}
+	{% endfor %}
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingTwo">
+      <h5 class="mb-0">
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          <h3>Play</h3>
+        </button>
+      </h5>
+    </div>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+      <div class="center-block card-body container" style="max-width: 970px;">
+	{% for i in result.play %}
+	{% if forloop.first %} <div class="row flex-center">{% endif %}
+	  <article class="top-10 col-md-5 listing {{ i.1.category }}">
+	    <img src="https://cdn.lolwot.com/wp-content/uploads/2015/03/20-amazing-european-vacation-destinations-you-must-visit-1.jpg" alt="tree house" class="img-thumbnail img-fluid">
+	    <div class="card">
+	      <div class="card-body info" rev_id="{{ i.0.id }}"
+		   user_id="{{ i.2.id }}"
+		   place_id="{{ i.1.id }}">
+		<h3 class="card-title">{{ i.1.name }}</h3>
+		<p class="card-text">{{ i.1.description }}</p>
+		<p class="card-text">Recommended by {{ i.2.username }}</p>
+		<p class="card-text">Review: {{ i.0.text }}</p>
+	      </div>
+	    </div>
+	  </article>
+	  {% if forloop.counter|divisibleby:2 %}
+	</div><div class="top-10 row flex-center">
+	  {% endif %}
+	  {% if forloop.last %}</div>{% endif %}
+	{% endfor %}
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingThree">
+      <h5 class="mb-0">
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+	  <h3>Stay</h3>
+        </button>
+      </h5>
+    </div>
+    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+      <div class="center-block card-body container" style="max-width: 970px;">
+	{% for i in result.stay %}
+	{% if forloop.first %} <div class="top-10 row flex-center">{% endif %}
+	  <article class="top-10 col-md-5 listing {{ i.1.category }}">
+	    <img src="https://cdn.lolwot.com/wp-content/uploads/2015/03/20-amazing-european-vacation-destinations-you-must-visit-1.jpg" alt="tree house" class="img-thumbnail img-fluid">
+	    <div class="card">
+		<div class="card-body info" rev_id="{{ i.0.id }}"
+		     user_id="{{ i.2.id }}"
+		     place_id="{{ i.1.id }}">
+		  <h3 class="card-title">{{ i.1.name }}</h3>
+		  <p class="card-text">{{ i.1.description }}</p>
+		  <p class="card-text">Recommended by {{ i.2.username }}</p>
+		  <p class="card-text">Review: {{ i.0.text }}</p>
+		</div>
+	    </div>
+	  </article>
+	  {% if forloop.counter|divisibleby:2 %}
+	</div><div class="top-10 row flex-center">
+	  {% endif %}
+	  {% if forloop.last %}</div>{% endif %}
+	{% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.1';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div class="social">
+  <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-size="large" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+
+</div>
+{% endblock %}

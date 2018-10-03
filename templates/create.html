@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Create{% endblock %}
+
+{% block content %} 
+</div>
+<h1>Hey {{ user.first_name }}! Where to?</h1>
+
+<form class="search">
+  <div class="input-group input-group-lg">
+    {% csrf_token %}
+    <input type="search" name="usr_query" value="{{ query }}" class="form-control" placeholder="Where do you want to go?" aria-label="Destination" aria-describedby="basic-addon2">
+    <button class="btn btn-outline-primary" type="submit">Search</button>
+  </div>
+</form>
+<div>
+  <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">EAT</button>
+  <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">PLAY</button>
+  <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">STAY</button>
+</div>
+<div>
+  <button type="button" class="btn btn-danger">Start Over</button>
+</div>
+
+<form action="{% url 'result' user.id %}" method="post">
+  <div class="input-group input-group-lg">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary btn-lg">Create</button>
+  </div>
+</form>
+
+{% endblock %}

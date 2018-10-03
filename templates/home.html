@@ -1,0 +1,268 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+{% load static %}
+<div class="row">
+   <div class="col-md-12">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'home' %}">Create</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'result' user.id %}">View Trips</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'write_review' user.id %}">Review</a>
+            </li>
+        </ul>
+    </div>
+    <div class="mx-auto order-0">
+        <a class="navbar-brand mx-auto" href="{% url 'home' %}">Souvenir.</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>   
+</div>
+</div>
+<script src="{% static 'js/script.js' %}"></script>
+<link rel="stylesheet" href="{% static 'souvenir/home.css' %}">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
+<script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.js"></script>
+<link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.css" rel='stylesheet' />
+
+<div class="container" style="margin-top: 60px;">
+ <div class="row">
+   <div class="col align-self-center">
+     <h1 style="text-align: center;">Hey {{ user.first_name }}. Let's get started.</h1>
+     <form class="search">
+       <div class="input-group input-group-lg">
+        {% csrf_token %}
+	<div class="ui-widget">
+	  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	  <link rel="stylesheet" href="/resources/demos/style.css">
+	  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	  <input id="search-bar" user_id="{{ user.id }}" type="search" name="usr_query" value="{{ query }}" class="form-control" placeholder="Where do you want to go?" aria-label="Destination" aria-describedby="basic-addon2">
+</div>
+	<script>
+	  $( function() {
+	  var availableTags = [
+	  "Denver",
+	  "San Francisco",
+	  "Los Angeles",
+	  "New York",
+	  "Raleigh",
+	  "French Lick",
+	  "Pensacola",
+	  "Winston-Salem",
+	  "Moraga"
+	  ];
+	  $( "#search-bar" ).autocomplete({
+	  source: availableTags
+	  });
+	  } );
+	</script>
+         <button id="search-btn" class="btn btn-outline-primary" type="submit">Search</button>
+        </div>
+     </form>
+   </div>
+ </div>
+</div>
+
+<div class="container">
+<div class="row button-top">
+  <div class="col button-container" id="eat-container">
+    <img src="http://www.fryhole.com/wp-content/uploads/2015/02/nopalito-2.jpg" alt="home">
+    <p>Eat</p>
+  </div>
+  <div class="col button-container" id="play-container">
+    <img src="https://cdn.shopify.com/s/files/1/0773/9113/articles/San_Francisco_Bike_Tour_1400x.progressive.jpg?v=1485461310" alt="home">
+    <p>Play</p>
+  </div>
+  <div class="col button-container" id="stay-container">
+    <img src="https://img.buzzfeed.com/buzzfeed-static/static/2016-12/9/17/campaign_images/buzzfeed-prod-fastlane01/18-ways-to-make-your-bed-the-most-comfy-place-on--2-5724-1481321073-5_dblbig.jpg" alt="home">
+    <p>Stay</p>
+  </div>
+</div>
+</div>
+
+
+<div>
+  <form action="{% url 'home' %}" method="get">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary" id="start-over">Start Over</button>
+  </form>
+</div>
+<div>
+  <!--<form action="{% url 'result' user.id %}" method="post">
+    {% csrf_token %}-->
+  <button user_id="{{ user.id }}"
+	  type="submit" class="cr btn btn-primary"
+	  id="create">Create</button>
+  <!--</form>-->
+</div>
+
+
+<div class="container map-container" id="map" style='width: 800px; height: 400px;'>
+</div>
+
+
+<div class="container results-container">
+  <div class="row results container">
+  </div>
+</div>
+
+
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoiZ2pkYW1lIiwiYSI6ImNqbXFsNXhnYzBpd2gzbGxoY3lwamRuYWUifQ.OFmEoBXX0QrvFMqe8qcmEw';
+$(document).ready(function() {  
+$('#search-btn').on('click', function(event){
+    let city = ($('#search-bar').val());
+    let user = $('#search-bar').attr('user_id');
+    event.preventDefault();
+    var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v9',
+    zoom: 9,
+});
+
+var nav = new mapboxgl.NavigationControl();
+map.addControl(nav, 'top-left');
+    $.ajax({
+      type: 'GET',
+      url: 'http://127.0.0.1:8000/souvenirapp/api/' + city + '/' + user + '/places',
+      dataType: 'json',
+      contentType: 'application/json',
+      success: function (data) {
+         console.log(data);
+         for (let i of data) {
+            var popup = new mapboxgl.Popup({offset: 25})
+                .setLngLat([i[1].longitude, i[1].latitude])
+                .setHTML('<p>' + i[1].name + '</p>' + '<p>' + i[1].category + '</p>')
+            var marker = new mapboxgl.Marker()
+                .setLngLat([i[1].longitude, i[1].latitude])
+                .setPopup(popup)
+                .addTo(map);
+            console.log(i[1].latitude);
+            map.setCenter([i[1].longitude, i[1].latitude]);
+
+}
+}
+});
+});
+});
+
+
+</script>
+
+
+<!--<script>
+  
+console.log('yo');
+$(document).ready(function() {
+  $('#search-btn').on('click', function(event){
+   let city = ($('#search-bar').val());
+   let user = $('#search-bar').attr('user_id');
+   console.log(user);
+   event.preventDefault();
+   $.ajax({
+      type: 'GET',
+      url: 'http://localhost:8000/souvenirapp/api/' + city + '/' + user + '/places',
+      dataType: 'json',
+      contentType: 'application/json',
+      success: function (data) {
+        console.log(data);
+        let html = '<ul>';
+        for (let i of data) {
+          html += '<li class="listing ' + i[1].category + '">';
+	       html += '<article>'; 
+            	   html += '<img src="https://cdn.lolwot.com/wp-content/uploads/2015/03/20-amazing-european-vacation-destinations-you-must-visit-1.jpg" alt="tree house" class="img-thumbnail">';
+	           html += '<div class="p-3 mb-2 bg- ">';
+		     html += '<div class="information">';
+                       html += '<p>' + i[1].name + ' - ' +  i[1].description + '</p>';
+	               html += '<button type="button" class="btn btn-primary float-right" data-toggle="button" aria-pressed="false" autocomplete="off">'+ "ADD" + '</button>';
+                       html += '<p>' + "Review: " + i[0].text + '</p>';
+                       html += '<p>' + "Recommended by " + i[2].first_name + '</p>';
+		       html += '<p>' + 'Category - ' + i[1].category + '</p>';
+		       for (let j = 0; j < i[0].rating; ++j) {
+		           html += '<i class="fas fa-star"></i>';
+			}
+	             html += '</div>';
+	           html += '</div>';
+           html += '</article>';
+         html += '</li>';
+        }
+        html += '</ul>';
+        $('.results').html(html);
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        html = '<h1>No data found</h1>';
+        $('.results').html(html);
+        console.log(jqXHR);
+        console.log(textStatus);
+        console.log(errorThrown);
+      }
+    });
+    });
+
+   $('#eat-container').on('click', function(event){
+      $('.Eat:hidden').show('fast');
+      $('.Stay').css('display', 'none');
+      $('.Play').css('display', 'none');
+   });
+
+  $('#stay-container').on('click', function(event){
+      $('.Stay:hidden').show('fast');
+      $('.Eat').css('display', 'none');
+      $('.Play').css('display', 'none');
+   });
+
+  $('#play-container').on('click', function(event){
+      $('.Play:hidden').show('fast');
+      $('.Eat').css('display', 'none');
+      $('.Stay').css('display', 'none');
+   });
+
+});
+</script>-->
+
+{% else %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'souvenir/styles.css' %}">
+<div class="login_title">
+  <h1>Souvenir.</h1>
+</div>
+<div class="container">
+<div class="row">
+  <div class="col align-self-center">
+  <h1> Welcome. </h1>
+  <div class="form-box">
+    <form action="{% url 'login' %}" method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
+    </form>
+    <form action="{% url 'signup' %}" method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-secondary btn-lg btn-block">Signup</button>
+    </form>
+    
+   </div>
+  </div>
+</div>
+</div>
+{% endif %}
+{% endblock %}

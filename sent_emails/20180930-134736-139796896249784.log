@@ -1,0 +1,25 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Subject: Password reset on 127.0.0.1:8000
+From: webmaster@localhost
+To: dan@dan.com
+Date: Sun, 30 Sep 2018 20:47:36 -0000
+Message-ID: <20180930204736.11378.81269@vagrant-ubuntu-trusty-64>
+
+
+You're receiving this email because you requested a password reset for your user account at 127.0.0.1:8000.
+
+Please go to the following page and choose a new password:
+
+http://127.0.0.1:8000/accounts/reset/Mg/501-4c0b18ef0422bdda9e46/
+
+Your username, in case you've forgotten: dan
+
+Thanks for using our site!
+
+The 127.0.0.1:8000 team
+
+
+
+-------------------------------------------------------------------------------

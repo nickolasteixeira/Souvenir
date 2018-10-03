@@ -1,0 +1,71 @@
+body, html {
+    height: 100%;
+}
+body{
+    background-image: url('../images/rawpixel-191102-unsplash.jpg');
+    background-size:cover;
+    background-position: center;
+    background-repeat:no-repeat;
+}
+.login_title {
+    color: white;
+    text-align: left;
+    margin-left: 10px;
+}
+
+.container {
+        margin-top:300px;
+        max-width:400px;
+}
+
+.align-self-center {
+        text-align: center;
+        padding: 30px;
+        background: white;
+        border-radius: 1%;
+        box-shadow: 0 15px 35px -6px #404040;
+
+}
+
+.align-self-center ul{
+    display: none;
+}
+
+.align-self-center h1{
+    text-align: center;
+    color:#3C3C3C;
+}
+.btn-primary {
+    background-color: #1741A8;
+    border-color: #1741A8;
+}
+.btn-primary:hover {
+    background-color: #3861C7;
+    border-color: #3861C7;
+}
+
+.btn-secondary {
+    background-color: #858585;
+    border-color: #858585;
+}
+.btn-secondary:hover {
+    background-color: #A0A0A0;
+    border-color: #A0A0A0;
+}
+.signup_form{
+    text-align: left;
+}
+
+.form-box {
+        display:block;
+        justify-content:center;
+        padding:10px;
+}
+
+.btn-primary, .btn-secondary {
+        margin: 10px;
+        box-shadow: 0 8px 8px -6px black;
+}
+
+
+
