@@ -62,7 +62,7 @@
  </div>
 </div>
 
-<button id="friends-search-btn" class="btn btn-primary friends-btn" type="submit">Friends List</button>
+<button id="friends-list-btn" class="btn btn-primary friends-btn" type="submit">Friends List</button>
 
 <div class="container friends-container">
   <div class="row friends container">
@@ -92,6 +92,25 @@ $(document).ready(function() {
       }
     });
   }); 
+  
+  $('#friends-list-btn').on('click', function(){
+  $.ajax({
+    type: 'GET',
+      url: 'http://localhost:8000/souvenirapp/api/allfriends/' + {{user.id}},
+      dataType: 'json',
+      contentType: 'application/json',
+      success: function (data) {
+        console.log(data);
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        html = '<h1>No data found</h1>';
+        $('.results').html(html);
+        console.log(jqXHR);
+        console.log(textStatus);
+        console.log(errorThrown);
+      }
+  });
+  });
 });
 </script>
 {% endblock %}
