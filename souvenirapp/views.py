@@ -52,6 +52,13 @@ def friends(request, user_id):
     user = User.objects.get(id=user_id)
     return render(request, 'souvenirapp/friends.html', {'user': user})
 
+@api_view(['GET'])
+def search_friends(request, user_id, search):
+    
+    users = User.objects.filter(username=search)
+    serializer = serializers.UserSerializer(users, many=True)
+    return Response(serializer.data) 
+
 @api_view(['GET', 'POST'])
 def state_list(request):
 #list all states
