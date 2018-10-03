@@ -3,6 +3,34 @@
 {% block title %}Trip{% endblock %}
 
 {% block content %}
+<style>
+  body{
+  text-align: center;
+  }
+  .card {
+  display: block;
+    box-shadow: 0px 1px 5px #555;
+  background-color: white;
+  margin-top:10px;
+}
+.card__title {
+    font-size: 2rem;
+    padding: .5rem;
+}
+.card__description {
+    padding: .5rem;
+    line-height: 1.6em;
+}
+  .card-container {
+  margin:auto;
+    padding: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-gap: 1rem;
+  }
+  a{
+  color:white;
+  }
+</style>
 <div class="row">
    <div class="col-md-12">
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
@@ -33,10 +61,21 @@
         </ul>
     </div>
 </nav>
-</div>
-
-
-<div>this is {{ query }} </div>
-<p>this is {{ user.username }}</p>
-
-{% endblock %}
+   </div>
+   <section class="card-container">
+     {% for i in query %}
+     <article class="card">
+       <header class="card__title">
+         <h3> {{ i.name }}</h3>
+       </header>
+       <button class="btn btn-primary" >
+	 <a href="{% url 'crTrip' user.id i.id%}">view</a>
+       </button>
+       <button  class="btn btn-danger">
+	 <a href="{% url 'deleteTrip' user.id i.id%}">delete</a>
+       </button>
+     </article>
+     {% endfor %}
+   </section>
+   {% endblock %}
+   

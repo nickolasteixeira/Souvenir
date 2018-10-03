@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -27,6 +27,7 @@ def review(request, user_id):
 #    return HttpResponse("You are at the create review page %s" % user.username)
 @csrf_exempt
 def result(request, user_id):
+        
     query = request.POST.copy()
     current_user = User.objects.get(id=user_id)
     trip = Trip.objects.create(user=current_user)
@@ -34,24 +35,28 @@ def result(request, user_id):
     trip.places = []
     results={"eat":[], "play":[], "stay":[]}
     for key, value in list(query.items()):
-        rev = Review.objects.get(id=key[0])
+        rev = Review.objects.get(id=key[:-2])
         r = query.pop(key)
         user = User.objects.get(id=r[1])
         place = Place.objects.get(id=r[0])
-        trip.places.append(place.id)
+        trip.places.append(rev.id)
         city = City.objects.get(id=place.city_id)
-        if place.category == "Eat":
+        cat = place.category.upper()
+        if cat == "EAT":
             results["eat"].append([rev, place, user])
-        elif place.category == "Play":
+        elif cat == "PLAY":
             results["play"].append([rev, place, user])
-        elif place.category == "Stay":
+        elif cat == "STAY":
             results["stay"].append([rev, place, user])
         #results.append([rev, place, user])
-    trip.name = "{}'s trip to".format(current_user.username)
+    name = "{}'s trip to {}".format(current_user.username, city.name)
+    try:
+        if Trip.objects.get(name=name):
+            name += "({})".format(trip.id)
+    except:
+        pass
+    trip.name = name
     trip.save()
-    print("******************")
-    print(trip.name)
-    print(trip.places)
     user = get_object_or_404(User, id=user_id)
     return render(request, 'souvenirapp/results.html', {'user': user,
                                                         'result': results})
@@ -117,6 +122,28 @@ def trips(request, user_id):
     trips = Trip.objects.filter(user=user_id)
     t = get_template('souvenirapp/view_trips.html')
     user = get_object_or_404(User, id=user_id)
-    return HttpResponse(t.render({'query':
-                                  [trip.name for trip in trips if trip.places],
+    return HttpResponse(t.render({'query':[trip for trip in trips],
                                   'user': user}))
+def createTrips(request, user_id, trip_id):
+    trips = Trip.objects.get(id=trip_id)
+    t = get_template('souvenirapp/results.html')
+    results={"eat":[], "play":[], "stay":[]}
+    for rev in trips.places:
+        rev = Review.objects.get(id=rev)
+        user = User.objects.get(id=rev.user_id.id)
+        place = Place.objects.get(id=rev.place_id.id)
+        cat = place.category.upper()
+        if cat == "EAT":
+            results["eat"].append([rev, place, user])
+        elif cat == "PLAY":
+            results["play"].append([rev, place, user])
+        elif cat == "STAY":
+            results["stay"].append([rev, place, user])
+        user = get_object_or_404(User, id=user_id)
+        t = get_template('souvenirapp/results.html')
+    return HttpResponse(t.render({'user': user,'result': results}))
+
+
+def deleteTrip(request, trip_id, user_id):
+    Trip.objects.get(id=trip_id).delete()
+    return trips(request, user_id)
