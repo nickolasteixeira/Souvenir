@@ -1,0 +1,6 @@
+Django==2.0.9
+psycopg2
+psycopg2-binary
+djangorestframework
+django-cors-headers
+gunicorn
