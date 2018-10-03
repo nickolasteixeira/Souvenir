@@ -54,10 +54,26 @@ def friends(request, user_id):
 
 @api_view(['GET'])
 def search_friends(request, user_id, search):
-    
+    '''Returns a list of friends based on search criteria'''
+    if len(search) > 0:
+        l_upper = search[0].upper()
+        l_lower = search[0].lower()
+        word = search[1:]
+    #users = User.objects.get(username__regex=r'[{}{}]{}'.format(l_upper, l_lower, word))
     users = User.objects.filter(username=search)
     serializer = serializers.UserSerializer(users, many=True)
     return Response(serializer.data) 
+
+@api_view(['GET'])
+def get_friends(request, user_id):
+    '''returns all of your friends'''
+    users = Person.objects.get(user_id=user_id).get_friends()
+    friends = []
+    for da_user in users:
+        friend = User.objects.get(id=da_user)
+        serializer = serializers.UserSerializer(friend, many=False).data
+        friends.append(serializer)
+    return Response(friends) 
 
 @api_view(['GET', 'POST'])
 def state_list(request):
