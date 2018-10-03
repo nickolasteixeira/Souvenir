@@ -14,4 +14,5 @@ urlpatterns = [
     path('trips/<str:user_id>', views.trips, name="trip"),
     path('results/<int:user_id>/trip/<int:trip_id>', views.createTrips, name="crTrip"),
     path('delete/<int:user_id>/trip/<int:trip_id>', views.deleteTrip, name='deleteTrip'),
+    path('review/add/<int:user_id>', views.addReview, name="addReview"),
 ]

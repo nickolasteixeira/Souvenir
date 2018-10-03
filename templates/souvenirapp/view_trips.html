@@ -68,11 +68,10 @@
        <header class="card__title">
          <h3> {{ i.name }}</h3>
        </header>
-       <button class="btn btn-primary" >
-	 <a href="{% url 'crTrip' user.id i.id%}">view</a>
-       </button>
-       <button  class="btn btn-danger">
-	 <a href="{% url 'deleteTrip' user.id i.id%}">delete</a>
+       <a class="btn btn-primary"
+	  href="{% url 'crTrip' user.id i.id%}">view</a>
+	 <a class="btn btn-danger"
+	    href="{% url 'deleteTrip' user.id i.id%}">delete</a>
        </button>
      </article>
      {% endfor %}

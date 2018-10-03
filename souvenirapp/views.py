@@ -23,7 +23,9 @@ def index(request):
 #    return render(request, 'souvenirapp/create.html', {'user': user})
 def review(request, user_id):
     user = get_object_or_404(User, id=user_id)
-    return render(request, 'souvenirapp/review.html', {'user': user})
+    places = Place.objects.all()
+    return render(request, 'souvenirapp/review.html', {'user': user,
+                                                       'places':places})
 #    return HttpResponse("You are at the create review page %s" % user.username)
 @csrf_exempt
 def result(request, user_id):
@@ -147,3 +149,13 @@ def createTrips(request, user_id, trip_id):
 def deleteTrip(request, trip_id, user_id):
     Trip.objects.get(id=trip_id).delete()
     return trips(request, user_id)
+
+def addReview(request, user_id):
+    addText = request.POST.get('text')
+    addRating = request.POST.get('rating')
+    addPlace = request.POST.get('place')
+    user = get_object_or_404(User, id=user_id)
+    place = get_object_or_404(Place, name=addPlace)
+    rev=Review.objects.create(
+        user_id=user,place_id=place,text=addText,rating=addRating)
+    return review(request, user_id)
