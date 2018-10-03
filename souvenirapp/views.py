@@ -27,6 +27,7 @@ def review(request, user_id):
     return render(request, 'souvenirapp/review.html', {'user': user,
                                                        'places':places})
 #    return HttpResponse("You are at the create review page %s" % user.username)
+
 @csrf_exempt
 def result(request, user_id):
         
@@ -62,6 +63,65 @@ def result(request, user_id):
     user = get_object_or_404(User, id=user_id)
     return render(request, 'souvenirapp/results.html', {'user': user,
                                                         'result': results})
+
+
+
+def friends(request, user_id):
+    user = User.objects.get(id=user_id)
+    return render(request, 'souvenirapp/friends.html', {'user': user})
+
+@api_view(['GET'])
+def search_friends(request, user_id, search):
+    '''Returns a list of friends based on search criteria'''
+    if request.method == 'GET':
+            #if len(search) > 0:
+            #l_upper = search[0].upper()
+            #l_lower = search[0].lower()
+            #word = search[1:]
+            #users = User.objects.get(username__regex=r'[{}{}]{}'.format(l_upper, l_lower, word))
+        users = User.objects.filter(username=search)
+        serializer = serializers.UserSerializer(users, many=True)
+        return Response(serializer.data) 
+
+@csrf_exempt
+@api_view(['POST', 'DELETE'])
+def add_friends(request, user_id, friend_id):
+    ''' adds or deletes friends to user_id'''
+    user = get_object_or_404(User, id=user_id)
+    friend = get_object_or_404(User, id=friend_id)
+    
+    if request.method == 'POST':
+        try:
+            person = Person(user=user)
+            person.save()
+        except Exception as e:
+            person = Person.objects.get(user=user)
+    
+        person.friends.add(friend)
+        person.save()
+    elif request.method == 'DELETE':
+        try:
+            person = Person(user=user)
+            person.save()
+        except Exception as e:
+            person = Person.objects.get(user=user)
+
+        person.friends.remove(friend)
+        person.save()
+
+    return HttpResponse('')
+    
+@api_view(['GET'])
+def get_friends(request, user_id):
+    '''returns all of your friends'''
+    users = Person.objects.get(user_id=user_id).get_friends()
+    friends = []
+    for da_user in users:
+        friend = User.objects.get(id=da_user)
+        serializer = serializers.UserSerializer(friend, many=False).data
+        friends.append(serializer)
+    return Response(friends) 
+
 @api_view(['GET', 'POST'])
 def state_list(request):
 #list all states
