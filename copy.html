@@ -62,17 +62,21 @@
  </div>
 </div>
 
-<button id="friends-list-btn" class="btn btn-primary friends-btn" type="submit">Friends List</button>
+
 
 <div class="container friends-container">
   <div class="row friends container">
   </div>
 </div>
 
+
+<button id="friends-list-btn" class="btn btn-primary" type="submit">Friends Listing</button>
+
 <script>
 
 $(document).ready(function() {
-    $(document).on('click', 'button', function() {
+   
+   $(document).on('click', 'button', function() {
         if ($(this).hasClass('a')) {
             places[$(this).parent().attr('rev_id')] = [$(this).parent().attr('place_id'),
                 $(this).parent().attr('user_id')
@@ -98,19 +102,19 @@ $(document).ready(function() {
       url: 'http://localhost:8000/souvenirapp/api/friends/' + {{user.id}} + '/' + search,
       dataType: 'json',
       contentType: 'application/json',
-success: function (data) {
+      success: function (data) {
         console.log(data)
         let html = '<ul>';
         for (let i of data) {
           html += '<li style="list-style-type: none;">';
-          html += '<article>';
+          html += '<article>'; 
           html += '<h3 user_id = i.id>' + i.username + ": " + i.first_name + " " + i.last_name + '</h3>';
-	  html += '<button type="button" class="a btn btn-primary float-right" data-toggle="button" aria-pressed="false" autocomplete="off">'+ "ADD" + '</button>';
-          html += '</article>';
+          html += '<button type="button" class="a btn btn-primary float-right" data-toggle="button" aria-pressed="false" autocomplete="off">'+ "ADD" + '</button>'; 
+	  html += '</article>';
           html += '</li>';
         }
         html += '</ul>';
-        $('.friends').html(html);
+        $('.friends').html(html);  
         },
       error: function (jqXHR, textStatus, errorThrown) {
         html = '<h1>No data found</h1>';
@@ -119,27 +123,38 @@ success: function (data) {
         console.log(textStatus);
         console.log(errorThrown);
       }
-    });
-  }); 
-  
-  $('#friends-list-btn').on('click', function(){
-  $.ajax({
-    type: 'GET',
-      url: 'http://localhost:8000/souvenirapp/api/allfriends/' + {{user.id}},
-      dataType: 'json',
-      contentType: 'application/json',
-      success: function (data) {
+});
+});
+});
+
+
+</script>
+
+
+<script>
+$(document).ready(function() {
+let user = $('#friends-search-bar').attr('user_id');
+$('#friends-list-btn').on('click', function(event){
+   let user = $('#friends-search-bar').attr('user_id');
+   console.log(user);
+   event.preventDefault();
+   $.ajax({
+     type: 'GET',
+     url: 'http://127.0.0.1:8000/souvenirapp/api/allfriends/' + '/' + user,
+     contentType: 'application/json',
+     success: function (data) {
         console.log(data);
-      },
-      error: function (jqXHR, textStatus, errorThrown) {
-        html = '<h1>No data found</h1>';
-        $('.results').html(html);
-        console.log(jqXHR);
-        console.log(textStatus);
-        console.log(errorThrown);
-      }
-  });
-  });
+        let html = '<ul>';
+        for (let i of data) {
+          html += '<li>' + i[1].name + '</li>';
+        }
+        html += '</ul>';
+}
+});
+});
 });
 </script>
+
+
+
 {% endblock %}
