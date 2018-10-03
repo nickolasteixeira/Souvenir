@@ -21,8 +21,10 @@ $(document).ready(function() {
 
     });
     $('.cr').on('click', function() {
-        let u_id = $(this).attr('user_id');
-        $('body').load('http://127.0.0.1:8000/souvenirapp/results/' + u_id, places);
+	if(!(jQuery.isEmptyObject(places))){
+            let u_id = $(this).attr('user_id');
+            $('body').load('http://127.0.0.1:8000/souvenirapp/results/' + u_id, places);
+	}
     });
 
     $('#search-btn').on('click', function(event) {

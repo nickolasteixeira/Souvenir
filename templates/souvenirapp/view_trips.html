@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block title %}Trip{% endblock %}
+
+{% block content %}
+<style>
+  body{
+  text-align: center;
+  }
+  .card {
+  display: block;
+    box-shadow: 0px 1px 5px #555;
+  background-color: white;
+  margin-top:10px;
+}
+.card__title {
+    font-size: 2rem;
+    padding: .5rem;
+}
+.card__description {
+    padding: .5rem;
+    line-height: 1.6em;
+}
+  .card-container {
+  margin:auto;
+    padding: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-gap: 1rem;
+  }
+  a{
+  color:white;
+  }
+</style>
+<div class="row">
+   <div class="col-md-12">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'home' %}">Create</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'trip' user.id %}">View Trips</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'write_review' user.id %}">Review</a>
+            </li>
+        </ul>
+    </div>
+    <div class="mx-auto order-0">
+        <a class="navbar-brand mx-auto" href="{% url 'home' %}">Souvenir</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+   </div>
+   <section class="card-container">
+     {% for i in query %}
+     <article class="card">
+       <header class="card__title">
+         <h3> {{ i.name }}</h3>
+       </header>
+       <a class="btn btn-primary"
+	  href="{% url 'crTrip' user.id i.id%}">view</a>
+	 <a class="btn btn-danger"
+	    href="{% url 'deleteTrip' user.id i.id%}">delete</a>
+       </button>
+     </article>
+     {% endfor %}
+   </section>
+   {% endblock %}
+   

@@ -12,7 +12,7 @@
                 <a class="nav-link" href="{% url 'friends' user.id %}">Friends</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'result' user.id %}">View Trips</a>
+                <a class="nav-link" href="{% url 'trip' user.id %}">View Trips</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'write_review' user.id %}">Review</a>
@@ -34,119 +34,48 @@
     </div>
 </nav>
 </div>
-
-<div id="review_title">
-  <style>
-  h1 {
-    position: relative;
-    margin-left: 40px;
-  } </style>
-  <h1>Here is your Itinerary {{ user.first_name }}</h1>
-</div>
-</div>
-
-<div id="accordion">
-  <div class="card">
-    <div class="card-header" id="headingOne">
-      <h5 class="mb-0">
-        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          <h3>Eat</h3>
-        </button>
-      </h5>
-    </div>
-
-    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-      <div class="card-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-      </div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-header" id="headingTwo">
-      <h5 class="mb-0">
-        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-          <h3>Play</h3>
-        </button>
-      </h5>
-    </div>
-    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-      <div class="card-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, suntd aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-      </div>
-      <div class="rating">
-	{% load static %}
-	<link rel="stylesheet" href="{% static 'souvenir/rating.css' %}">
-	<span><input type="radio" name="rating" id="str5" value="5"><label for="str5"></label></span>
-	<span><input type="radio" name="rating" id="str4" value="4"><label for="str4"></label></span>
-	<span><input type="radio" name="rating" id="str3" value="3"><label for="str3"></label></span>
-	<span><input type="radio" name="rating" id="str2" value="2"><label for="str2"></label></span>
-	<span><input type="radio" name="rating" id="str1" value="1"><label for="str1"></label></span>
-      </div>
-      <script
-  src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous">
-	$(document).ready(function(){
-//  Check Radio-box
-    $(".rating input:radio").attr("checked", false);
-    $('.rating input').click(function () {
-        $(".rating span").removeClass('checked');
-        $(this).parent().addClass('checked');
-    });
-
-    $('input:radio').change(
-    function(){
-        var userRating = this.value;
-        alert(userRating);
-    }); 
-});
-      </script>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-header" id="headingThree">
-      <h5 class="mb-0">
-        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-	  <h3>Stay</h3>
-        </button>
-      </h5>
-    </div>
-    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-      <div class="card-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-      </div>
-    </div>
-  </div>
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.1';
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-<div class="social">
-  <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-size="l
-arge" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelo
-pers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
-</div>
-</div>
-<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.js'></script>
-<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.css' rel='stylesheet' />
-<div id='map' style='width: 400px; height: 300px;'></div>
-<script>
-mapboxgl.accessToken = 'pk.eyJ1IjoiZ2pkYW1lIiwiYSI6ImNqbXFsNXhnYzBpd2gzbGxoY3lwamRuYWUifQ.OFmEoBXX0QrvFMqe8qcmEw';
-var map = new mapboxgl.Map({
-    container: 'map',
-    style: 'mapbox://styles/mapbox/streets-v9',
-    showZoom: true,
-});
-var nav = new mapboxgl.NavigationControl();
-map.addControl(nav, 'top-left');
-var marker = new mapboxgl.Marker()
-  .setLngLat([30.5, 50.5])
-  .addTo(map);
-</script>
-
+   
+   <div id="review_title">
+     <style>
+       body{
+       display:block;
+       }
+       h1 {
+       position: relative;
+       margin-left: 40px;
+       } </style>
+     <h1>Add a Review</h1>
+   </div>
+   <div class="container">
+   <form class="search" action="{% url 'addReview' user.id %}" method="POST">
+     {% csrf_token %}
+     <div class="input-group mb-3">
+       <select name="place"
+	       class="custom-select" id="inputGroupSelect03"
+	       aria-label="Example select with button addon">
+	 <option selected="selected">places</option>
+	 {% for place in places %}
+	 <option value="{{ place.name }}">{{ place.name }}</option>
+	 {% endfor %}
+       </select>
+     </div>
+     <div class="input-group mb-3">
+       <textarea class="form-control" name="text" value="{{ query }}" class="form-control" placeholder="whats the review" aria-label="Destination" aria-describedby="basic-addon2"></textarea>
+     </div>
+     <div class="input-group mb-3">
+       <select name="rating"
+	       class="custom-select" id="inputGroupSelect03"
+	       aria-label="Example select with button addon">
+	 <option selected="selected">Rating</option>
+	 <option value="1">1</option>
+	 <option value="2">2</option>
+	 <option value="3">3</option>
+	 <option value="4">4</option>
+	 <option value="5">5</option>
+     </select>
+     
+     <button class="btn btn-outline-primary" type="submit">add</button>
+   </form>
+   </div>
 
 {% endblock %}
