@@ -25,6 +25,7 @@ def review(request, user_id):
     user = get_object_or_404(User, id=user_id)
     return render(request, 'souvenirapp/review.html', {'user': user})
 #    return HttpResponse("You are at the create review page %s" % user.username)
+
 @csrf_exempt
 def result(request, user_id):
     query = request.POST.copy()
@@ -55,15 +56,44 @@ def friends(request, user_id):
 @api_view(['GET'])
 def search_friends(request, user_id, search):
     '''Returns a list of friends based on search criteria'''
-    if len(search) > 0:
-        l_upper = search[0].upper()
-        l_lower = search[0].lower()
-        word = search[1:]
-    #users = User.objects.get(username__regex=r'[{}{}]{}'.format(l_upper, l_lower, word))
-    users = User.objects.filter(username=search)
-    serializer = serializers.UserSerializer(users, many=True)
-    return Response(serializer.data) 
+    if request.method == 'GET':
+            #if len(search) > 0:
+            #l_upper = search[0].upper()
+            #l_lower = search[0].lower()
+            #word = search[1:]
+            #users = User.objects.get(username__regex=r'[{}{}]{}'.format(l_upper, l_lower, word))
+        users = User.objects.filter(username=search)
+        serializer = serializers.UserSerializer(users, many=True)
+        return Response(serializer.data) 
 
+@csrf_exempt
+@api_view(['POST', 'DELETE'])
+def add_friends(request, user_id, friend_id):
+    ''' adds or deletes friends to user_id'''
+    user = get_object_or_404(User, id=user_id)
+    friend = get_object_or_404(User, id=friend_id)
+    
+    if request.method == 'POST':
+        try:
+            person = Person(user=user)
+            person.save()
+        except Exception as e:
+            person = Person.objects.get(user=user)
+    
+        person.friends.add(friend)
+        person.save()
+    elif request.method == 'DELETE':
+        try:
+            person = Person(user=user)
+            person.save()
+        except Exception as e:
+            person = Person.objects.get(user=user)
+
+        person.friends.remove(friend)
+        person.save()
+
+    return HttpResponse('')
+    
 @api_view(['GET'])
 def get_friends(request, user_id):
     '''returns all of your friends'''

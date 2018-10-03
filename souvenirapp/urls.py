@@ -13,6 +13,7 @@ urlpatterns = [
     path('api/<int:city_id>/places', views.places_list, name='places_list'),
     path('api/<str:city_name>/<int:user_id>/places', views.search, name='search'),
     path('api/friends/<int:user_id>/<str:search>', views.search_friends, name='search_friends'),
-    path('api/allfriends/<int:user_id>', views.get_friends, name='get_friends')
+    path('api/allfriends/<int:user_id>', views.get_friends, name='get_friends'),
+    path('api/addfriends/<int:user_id>/<int:friend_id>', views.add_friends, name='add_friends')
 #    path('search/<str:user_id>', views.search, name="search"),
 ]
