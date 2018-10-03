@@ -47,7 +47,7 @@ def result(request, user_id):
         elif place.category == "Stay":
             results["stay"].append([rev, place, user])
         #results.append([rev, place, user])
-    trip.name = "{}'s trip to {}".format(current_user.username, city.name)
+    trip.name = "{}'s trip to".format(current_user.username)
     trip.save()
     print("******************")
     print(trip.name)

@@ -1,1 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Trip{% endblock %}
+
+{% block content %}
+<div class="row">
+   <div class="col-md-12">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'home' %}">Create</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'trip' user.id %}">View Trips</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'write_review' user.id %}">Review</a>
+            </li>
+        </ul>
+    </div>
+    <div class="mx-auto order-0">
+        <a class="navbar-brand mx-auto" href="{% url 'home' %}">Souvenir</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+</div>
+
+
 <div>this is {{ query }} </div>
+<p>this is {{ user.username }}</p>
+
+{% endblock %}
