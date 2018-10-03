@@ -12,5 +12,6 @@ urlpatterns = [
     path('api/city_list/', views.city_list, name='city_list'),
     path('api/<int:city_id>/places', views.places_list, name='places_list'),
     path('api/<str:city_name>/<int:user_id>/places', views.search, name='search'),
+    path('api/friends/<int:user_id>/<str:search>', views.search_friends, name='get_friends')
 #    path('search/<str:user_id>', views.search, name="search"),
 ]
