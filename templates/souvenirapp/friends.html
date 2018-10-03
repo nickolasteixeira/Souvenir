@@ -188,7 +188,20 @@ $(document).ready(function() {
       dataType: 'json',
       contentType: 'application/json',
       success: function (data) {
-        console.log(data);
+        let html = '<ul>';
+        for (let i of data) {
+          console.log(i)
+          html += '<li class="listing_friends">';
+          html += '<div class="p-3 mb-2 bg- ">';
+          html += '<article>';
+          html += '<h2 user_id = i.id>' + i.first_name + " " + i.last_name + '</h2>'+ '<h3>' + "@" + i.username + '</h3>';
+          html += '<button type="button" id="' + i.id + '" class="d btn btn-danger float-right" data-toggle="button" aria-pressed="false" autocomplete="off">'+ "DELETE" + '</button>';
+          html += '</article>';
+        html += '</div>';
+      html += '</li>';
+        }
+        html += '</ul>';
+      $('.friends').html(html);
       },
       error: function (jqXHR, textStatus, errorThrown) {
         html = '<h1>No data found</h1>';
