@@ -36,7 +36,6 @@
 </nav>   
 </div>
 </div>
-<script src="{% static 'js/script.js' %}"></script>
 <link rel="stylesheet" href="{% static 'souvenir/home.css' %}">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
@@ -69,24 +68,84 @@
   </div>
 </div>
 
+
+
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 <script>
 
 $(document).ready(function() {
+
     $(document).on('click', 'button', function() {
         if ($(this).hasClass('a')) {
-            places[$(this).parent().attr('rev_id')] = [$(this).parent().attr('place_id'),
-                $(this).parent().attr('user_id')
-            ]
-            console.log(places);
             $(this).toggleClass('a d');
-                $(this).toggleClass("btn-primary btn-danger");
+            $(this).toggleClass("btn-primary btn-danger");
             $(this).text('delete');
+	    let csrftoken = Cookies.get('csrftoken');
+	    console.log('add');
+	    let data = {'user': {{user.id}}, 'friend': parseInt(10, this.id), 'cookie': csrftoken};
+
+	    function csrfSafeMethod(method) {
+   		 // these HTTP methods do not require CSRF protection
+    		return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+	    }
+	    $.ajaxSetup({
+    		beforeSend: function(xhr, settings) {
+        	    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            		xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        	    }
+    	        }
+	    });
+	    $.ajax({
+		type:'POST',
+		url: 'http://localhost:8000/souvenirapp/api/addfriends/' + {{user.id}} + '/' + this.id,
+		dataType: 'json',
+		contentType: 'application/json',
+		data: JSON.stringify(data),
+		success: function(data1) {
+			console.log(data1);
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+	        	console.log(jqXHR);
+			console.log(textStatus);
+			console.log(errorThrown);
+		}
+	    });
         } else if ($(this).hasClass('d')) {
-            delete places[$(this).parent().attr('rev_id')];
-            console.log(places);
             $(this).toggleClass('d a');
-                $(this).toggleClass("btn-primary btn-danger");
+            $(this).toggleClass("btn-primary btn-danger");
             $(this).text('add');
+	    console.log('delete');
+
+	    let csrftoken = Cookies.get('csrftoken');
+	    console.log('add');
+	    let data = {'user': {{user.id}}, 'friend': parseInt(10, this.id), 'cookie': csrftoken};
+
+	    function csrfSafeMethod(method) {
+   		 // these HTTP methods do not require CSRF protection
+    		return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+	    }
+	    $.ajaxSetup({
+    		beforeSend: function(xhr, settings) {
+        	    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            		xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        	    }
+    	        }
+	    });
+	    $.ajax({
+		type:'DELETE',
+		url: 'http://localhost:8000/souvenirapp/api/addfriends/' + {{user.id}} + '/' + this.id,
+		dataType: 'json',
+		contentType: 'application/json',
+		data: JSON.stringify(data),
+		success: function(data1) {
+			console.log(data1);
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+	        	console.log(jqXHR);
+			console.log(textStatus);
+			console.log(errorThrown);
+		}
+	    });
         }
 
     });
@@ -98,14 +157,14 @@ $(document).ready(function() {
       url: 'http://localhost:8000/souvenirapp/api/friends/' + {{user.id}} + '/' + search,
       dataType: 'json',
       contentType: 'application/json',
-success: function (data) {
-        console.log(data)
+      success: function (data) {
+	console.log(data);
         let html = '<ul>';
         for (let i of data) {
           html += '<li style="list-style-type: none;">';
           html += '<article>';
           html += '<h3 user_id = i.id>' + i.username + ": " + i.first_name + " " + i.last_name + '</h3>';
-	  html += '<button type="button" class="a btn btn-primary float-right" data-toggle="button" aria-pressed="false" autocomplete="off">'+ "ADD" + '</button>';
+	  html += '<button id="' + i.id + '" type="button" class="a btn btn-primary float-right add-friend" data-toggle="button" aria-pressed="false" autocomplete="off">'+ "ADD" + '</button>';
           html += '</article>';
           html += '</li>';
         }
