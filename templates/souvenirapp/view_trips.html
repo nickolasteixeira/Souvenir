@@ -3,6 +3,7 @@
 {% block title %}Trip{% endblock %}
 
 {% block content %}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 <style>
   body{
   text-align: center;
@@ -36,8 +37,11 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="{% url 'home' %}">Create</a>
+	    <li class="nav-item active">
+	    	<a class="nav-link" href="{% url 'home' %}">Home</a>
+	    </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'friends' user.id%}">Friends</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'trip' user.id %}">View Trips</a>
@@ -48,7 +52,8 @@
         </ul>
     </div>
     <div class="mx-auto order-0">
-        <a class="navbar-brand mx-auto" href="{% url 'home' %}">Souvenir.</a>
+        <a class="navbar-brand mx-auto" href="{% url 'home' %}"><i class="fas fa-plane-departure"></i></a>
+
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -67,7 +72,7 @@
      <article class="card">
        <header class="card__title">
          <h3> {{ i.name }}</h3>
-       </header>
+       </header> 
        <a class="btn btn-primary"
 	  href="{% url 'crTrip' user.id i.id%}">view</a>
 	 <a class="btn btn-danger"

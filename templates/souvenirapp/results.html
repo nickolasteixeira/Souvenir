@@ -3,6 +3,7 @@
 {% block title %}Results{% endblock %}
 
 {% block content %}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
 <div class="row">
    <div class="col-md-12">
@@ -21,7 +22,7 @@
          </ul>
     </div>
        <div class="mx-auto order-0">
-         <a class="navbar-brand mx-auto" href="{% url 'home' %}">Souvenir</a>
+         <a class="navbar-brand mx-auto" href="{% url 'home' %}"><i class="fas fa-plane-departure"></i></a>
          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
            <span class="navbar-toggler-icon"></span>
          </button>
@@ -81,7 +82,7 @@
 	{% for i in result.eat %}
 	{% if forloop.first %} <div class="row flex-center">{% endif %}
 	  <article class="top-10 col-md-5 listing {{ i.1.category }}">
-	    <img src="https://cdn.lolwot.com/wp-content/uploads/2015/03/20-amazing-european-vacation-destinations-you-must-visit-1.jpg" alt="tree house" class="img-thumbnail img-fluid">
+	    <img src="{{i.1.photourl}}" alt="tree house" class="img-thumbnail img-fluid">
 	    <div class="card">
 	      <div class="card-body info" rev_id="{{ i.0.id }}"
 		   user_id="{{ i.2.id }}"
@@ -114,7 +115,7 @@
 	{% for i in result.play %}
 	{% if forloop.first %} <div class="row flex-center">{% endif %}
 	  <article class="top-10 col-md-5 listing {{ i.1.category }}">
-	    <img src="https://cdn.lolwot.com/wp-content/uploads/2015/03/20-amazing-european-vacation-destinations-you-must-visit-1.jpg" alt="tree house" class="img-thumbnail img-fluid">
+	    <img src="{{i.1.photourl}}" alt="tree house" class="img-thumbnail img-fluid">
 	    <div class="card">
 	      <div class="card-body info" rev_id="{{ i.0.id }}"
 		   user_id="{{ i.2.id }}"
@@ -147,7 +148,7 @@
 	{% for i in result.stay %}
 	{% if forloop.first %} <div class="top-10 row flex-center">{% endif %}
 	  <article class="top-10 col-md-5 listing {{ i.1.category }}">
-	    <img src="https://cdn.lolwot.com/wp-content/uploads/2015/03/20-amazing-european-vacation-destinations-you-must-visit-1.jpg" alt="tree house" class="img-thumbnail img-fluid">
+	    <img src="{{i.1.photourl}}" alt="tree house" class="img-thumbnail img-fluid">
 	    <div class="card">
 		<div class="card-body info" rev_id="{{ i.0.id }}"
 		     user_id="{{ i.2.id }}"
@@ -176,8 +177,4 @@
   js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.1';
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
-<div class="social">
-  <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-size="large" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
-
-</div>
 {% endblock %}

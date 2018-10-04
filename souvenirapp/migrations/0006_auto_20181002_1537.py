@@ -17,4 +17,3 @@ class Migration(migrations.Migration):
             field=django.contrib.postgres.fields.ArrayField(base_field=models.CharField(blank=True, max_length=100), blank=True, null=True, size=None),
         ),
     ]
-
