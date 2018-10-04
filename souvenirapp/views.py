@@ -53,11 +53,9 @@ def result(request, user_id):
             results["stay"].append([rev, place, user])
         #results.append([rev, place, user])
     name = "{}'s trip to {}".format(current_user.username, city.name)
-    try:
-        if Trip.objects.get(name=name):
-            name += "({})".format(trip.id)
-    except:
-        pass
+    count = len(Trip.objects.filter(name__contains=name))
+    if count > 0:
+        name += "({})".format(count)
     trip.name = name
     trip.save()
     user = get_object_or_404(User, id=user_id)
