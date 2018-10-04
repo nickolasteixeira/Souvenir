@@ -33,7 +33,7 @@ $(document).ready(function() {
         event.preventDefault();
         $.ajax({
             type: 'GET',
-            url: 'http://127.0.0.1:8000/souvenirapp/api/' + city + '/' + user + '/places',
+            url: 'http://http://35.227.60.9/souvenirapp/api/' + city + '/' + user + '/places',
             dataType: 'json',
             contentType: 'application/json',
             success: function(data) {
