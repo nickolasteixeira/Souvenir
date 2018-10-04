@@ -33,7 +33,7 @@ def dump_data(city_search, section, category):
             if r2.status_code == 200:
                 data2 = r2.json()
                 for photo in data2.get('response').get('photos').get('items'):
-                    if photo.get('prefix') or photo.get('suffix') is None:
+                    if photo.get('prefix') is None or photo.get('suffix') is None:
                         photoUrl['id'] = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvWNn44aLYos8vjzLX3aCkJQ0pojpWcm9ax2PZsEuQavhF7fH5cg'
                     else:
                         photoUrl['id'] = photo.get('prefix') + '400x300' + photo.get('suffix')
