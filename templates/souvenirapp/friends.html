@@ -5,6 +5,11 @@
 {% block content %}
 {% load static %}
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
+<script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.js"></script>
+<link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.css" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'souvenir/home.css' %}">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 <div class="row">
    <div class="col-md-12">
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
@@ -41,26 +46,17 @@
 </nav>   
 </div>
 </div>
-<link rel="stylesheet" href="{% static 'souvenir/home.css' %}">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-<link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
-<script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.js"></script>
-<link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.css" rel='stylesheet' />
 
 <div class="container" style="margin-top: 60px;">
  <div class="row">
    <div class="col align-self-center">
      <h1 style="text-align: center;">Looking for more inspiration {{ user.first_name }}...</h1>
-     <form class="search">
+     <form class="search ui-widget">
        <div class="input-group input-group-lg">
-        {% csrf_token %}
-	<div class="ui-widget">
-	  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	  <input id="friends-search-bar" user_id="{{ user.id }}" type="search" name="usr_query" value="{{ query }}" class="form-control" placeholder="enter a username or last name of who you are looking for..." aria-label="Friends" aria-describedby="basic-addon2">
-         <button id="friends-search-btn" class="btn btn-outline-primary" type="submit">Search</button>
-        </div>
+         {% csrf_token %}
+	 <input id="friends-search-bar" user_id="{{ user.id }}" type="search" name="usr_query" value="{{ query }}" class="form-control" placeholder="enter a username or last name of who you are looking for..." aria-label="Friends" aria-describedby="basic-addon2"
+		style="border-radius: 5px;">
+	 <button id="friends-search-btn" class="btn btn-outline-primary" type="submit">Search</button>
      </form>
    </div>
  </div>
