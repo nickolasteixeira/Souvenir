@@ -5,12 +5,17 @@
 {% block content %}
 {% if user.is_authenticated %}
 {% load static %}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+<link rel="stylesheet" href="{% static 'souvenir/home.css' %}">
 <div class="row">
    <div class="col-md-12">
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
+	    <li class="nav-item active">
+                <a class="nav-link" href="{% url 'home' %}">Home</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="{% url 'friends' user.id %}">Friends</a>
             </li>
             <li class="nav-item">
@@ -22,7 +27,7 @@
         </ul>
     </div>
     <div class="mx-auto order-0">
-        <a class="navbar-brand mx-auto" href="{% url 'home' %}">Souvenir.</a>
+        <a class="navbar-brand mx-auto" href="{% url 'home' %}"><i class="fas fa-plane-departure"></i></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -35,11 +40,30 @@
         </ul>
     </div>
 </nav>   
+
+<nav class="navbar fixed-bottom navbar-expand-md navbar-dark bg-dark">
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+  <form action="{% url 'home' %}" method="get">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-secondary" id="start-over">Start Over</button>
+  </form>
+		</li>
+		<li class="nav-item">
+  <button user_id="{{ user.id }}"
+	  type="submit" class="cr btn btn-secondary"
+	  id="create">Create</button>
+	    </li>
+        </ul>
+    </div>
+</nav>
+
+
+
 </div>
 </div>
 <script src="{% static 'js/script.js' %}"></script>
-<link rel="stylesheet" href="{% static 'souvenir/home.css' %}">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
 <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.js"></script>
 <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.css" rel='stylesheet' />
@@ -53,7 +77,6 @@
         {% csrf_token %}
 	<div class="ui-widget">
 	  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	  <link rel="stylesheet" href="/resources/demos/style.css">
 	  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	  <input id="search-bar" user_id="{{ user.id }}" type="search" name="usr_query" value="{{ query }}" class="form-control" placeholder="Where do you want to go?" aria-label="Destination" aria-describedby="basic-addon2">
@@ -98,22 +121,6 @@
     <p>Stay</p>
   </div>
 </div>
-</div>
-
-
-<div>
-  <form action="{% url 'home' %}" method="get">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-primary" id="start-over">Start Over</button>
-  </form>
-</div>
-<div>
-  <!--<form action="{% url 'result' user.id %}" method="post">
-    {% csrf_token %}-->
-  <button user_id="{{ user.id }}"
-	  type="submit" class="cr btn btn-primary"
-	  id="create">Create</button>
-  <!--</form>-->
 </div>
 
 
