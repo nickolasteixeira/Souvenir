@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # Install dependencies and run application
 git clone https://github.com/nickolasteixeira/Souvenir.git
+grep -rl 'localhost:8000' ./Souvenir | xargs sed -i 's/localhost:8000/35.227.60.9/g'
+grep -rl '127.0.0.1:8000' ./Souvenir | xargs sed -i 's/127.0.0.1:8000/35.227.60.9/g'
 
 sudo apt-get install -y python3-pip
 sudo apt-get install -y python-pip
