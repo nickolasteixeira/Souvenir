@@ -16,8 +16,4 @@ class Migration(migrations.Migration):
             name='places',
             field=django.contrib.postgres.fields.ArrayField(base_field=models.CharField(blank=True, max_length=100), blank=True, null=True, size=None),
         ),
-<<<<<<< HEAD
-]
-=======
     ]
->>>>>>> 4394cae3c5c1a9e6cc4353cf209153690eb71db0
