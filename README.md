@@ -37,6 +37,25 @@ Now you can execute the install_script.sh
 ./install_script.sh
 ```
 
+Move souvenir.conf file to /etc/init/ folder for upstart file, then start your souvenir.conf file
+```bash
+mv Souvenir/souvenir.conf /etc/init/
+```
+```bash
+sudo service souvenir start
+```
+
+Now check to see if you application is running on your server
+```bash
+sudo service souvenir status
+```
+
+It should response with a PID number, something like this:
+```bash
+souvenir start/running, process 21791
+```
+
+Check your server IP address to see if the application is running and voila! You have the Souvenir application running on your server. 
 
 ## Testing
 TBD
