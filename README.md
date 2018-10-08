@@ -39,7 +39,7 @@ Now you can execute the install_script.sh
 
 Move souvenir.conf file to /etc/init/ folder for upstart file, then start your souvenir.conf file
 ```bash
-mv Souvenir/souvenir.conf /etc/init/
+sudo mv Souvenir/souvenir.conf /etc/init/
 ```
 ```bash
 sudo service souvenir start
