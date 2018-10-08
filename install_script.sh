@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+#remove Souvenir folder
+rm -rf ./Souvenir
+
 # Install dependencies and run application
 git clone https://github.com/nickolasteixeira/Souvenir.git
 grep -rl 'localhost:8000' ./Souvenir | xargs sed -i 's/localhost:8000/35.227.60.9/g'

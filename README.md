@@ -28,7 +28,7 @@ git clone https://github.com/nickolasteixeira/Souvenir.git
 Once cloned, move the install_script.sh to the root of your home file path
 
 ```bash
-mv Souvenir/install_script.sh
+mv Souvenir/install_script.sh .
 ```
 
 Now you can execute the install_script.sh
