@@ -36,4 +36,5 @@ echo "from django.contrib.auth import get_user_model; User = get_user_model(); U
 
 
 #migrate database
+python3 manage.py makemigrations
 python3 manage.py migrate
