@@ -1,6 +1,8 @@
 # Souvenir
 Building the trip you want, based on the recommendations of those you trust.
 
+[Video Presentation](https://www.youtube.com/watch?v=FjJUDB-yX7k&index=24&list=PLlLHfkTcnvmO1hrfh9x4N8i6qgbv7zSmQ&t=0s)
+
 ## Description
 Souvenir aims to solve the problem of consolidating all of your friends travel recommendations into on application. Wouldn’t it be better if you could build the base of your next trip around the people you trust recommendations?
 
